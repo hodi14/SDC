@@ -1,0 +1,23 @@
+-- DB.tasks definition
+
+CREATE TABLE `tasks` (
+  `text` varchar(5000) DEFAULT NULL,
+  `HTML` tinyint(1) DEFAULT NULL,
+  `record_count` int DEFAULT '0',
+  `last_record` timestamp NULL DEFAULT NULL,
+  `id` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- DB.users definition
+
+CREATE TABLE `users` (
+  `phone` varchar(100) DEFAULT NULL,
+  `password` varchar(100) NOT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `birth_year` varchar(100) DEFAULT NULL,
+  `dailect` varchar(100) DEFAULT NULL,
+  `study_level` varchar(100) DEFAULT NULL,
+  `gender` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
