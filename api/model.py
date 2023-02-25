@@ -32,3 +32,9 @@ class userInfo_up(BaseModel):
     password: Union[str, None] = None
     study: Union[str, None] = None
     dailect : Union[str, None] = None
+
+class upload(BaseModel):
+    user_email: Union[str, None] = None
+    user_phone:  Union[str, None] = None
+    task_id: Union[int, None] = None
+    task_text: Union[str, None] = None
