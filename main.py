@@ -12,6 +12,18 @@ __author__ = "Fwad abdi"
 
 app.include_router(router)
 
+def checkTableExists(dbcon, tablename):
+    dbcur = dbcon.cursor()
+    dbcur.execute("""
+        SELECT COUNT(*)
+        FROM information_schema.tables
+        WHERE table_name = '""" + tablename +"'")
+    if dbcur.fetchone()[0] >0:
+        dbcur.close()
+        return True
+
+    dbcur.close()
+    return False
 
 @app.on_event("startup")
 def startup() -> None:
@@ -27,6 +39,46 @@ def startup() -> None:
         password="root",
         database="DB"
         )
+        if not checkTableExists( app.mydb,"tasks"):
+            dbcur = app.mydb.cursor()
+            dbcur.execute("""
+                        CREATE TABLE `tasks` (
+                          `text` varchar(5000) DEFAULT NULL,
+                          `HTML` tinyint(1) DEFAULT NULL,
+                          `record_count` int DEFAULT '0',
+                          `last_record` timestamp NULL DEFAULT NULL,
+                          `id` int NOT NULL AUTO_INCREMENT,
+                          PRIMARY KEY (`id`)
+                        ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                    """)
+        if not checkTableExists( app.mydb,"users"):
+            dbcur = app.mydb.cursor()
+            dbcur.execute("""
+                        CREATE TABLE `users` (
+                              `phone` varchar(100) DEFAULT NULL,
+                              `password` varchar(100) NOT NULL,
+                              `name` varchar(100) DEFAULT NULL,
+                              `email` varchar(100) DEFAULT NULL,
+                              `birth_year` varchar(100) DEFAULT NULL,
+                              `dailect` varchar(100) DEFAULT NULL,
+                              `study_level` varchar(100) DEFAULT NULL,
+                              `gender` varchar(100) DEFAULT NULL
+                            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                    """)
+        if not checkTableExists( app.mydb,"recorded"):
+            dbcur = app.mydb.cursor()
+            dbcur.execute("""
+                        CREATE TABLE `recorded` (
+                          `user_email` varchar(100) DEFAULT NULL,
+                          `user_phone` varchar(100) DEFAULT NULL,
+                          `task_id` int NOT NULL,
+                          `created_at` timestamp NULL DEFAULT NULL,
+                          `id` int NOT NULL AUTO_INCREMENT,
+                          PRIMARY KEY (`id`)
+                        ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                    """)
+
+
     except Exception as error:
         raise Exception(error)
 
