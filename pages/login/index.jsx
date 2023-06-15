@@ -92,8 +92,9 @@ const Login = () => {
               width: "50%",
 
               "&.Mui-selected": {
-                backgroundColor: theme.palette.secondary.main,
-                borderRadius: "0.5rem",
+                backgroundColor: theme.palette.primary.main,
+                borderRadius: "1rem",
+                color: "#fff",
               },
             },
 
@@ -138,7 +139,7 @@ const Login = () => {
 
           <Button
             variant="contained"
-            color="secondary"
+            color="primary"
             sx={{
               display: "block",
               margin: "1rem auto 0.5rem",
@@ -210,7 +211,7 @@ const Login = () => {
 
           <Button
             variant="contained"
-            color="secondary"
+            color="primary"
             sx={{
               display: "block",
               margin: "1rem auto 0.5rem",

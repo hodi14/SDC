@@ -14,7 +14,7 @@ import Panel from "../components/Panel";
 function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {

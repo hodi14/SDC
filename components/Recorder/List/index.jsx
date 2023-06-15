@@ -72,7 +72,7 @@ const RecordingsList = ({ audio }) => {
           <Button
             fullWidth
             variant="contained"
-            color="secondary"
+            color="primary"
             sx={{ width: "6.5rem" }}
           >
             Submit

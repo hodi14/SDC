@@ -66,7 +66,7 @@ const Panel = () => {
         <Tabs
           value={value}
           onChange={handleChange}
-          indicatorColor="secondary"
+          indicatorcolor="primary"
           textColor="inherit"
           aria-label="panel tabs"
           sx={{
@@ -74,8 +74,9 @@ const Panel = () => {
               width: "50%",
 
               "&.Mui-selected": {
-                backgroundColor: theme.palette.secondary.main,
-                borderRadius: "0.5rem",
+                backgroundColor: theme.palette.primary.main,
+                borderRadius: "1rem",
+                color: "#fff",
               },
             },
 
@@ -97,11 +98,17 @@ const Panel = () => {
             }}
           >
             {[...new Array(50)].map((item, index) => (
-              <ListItem key={index} sx={{ minWidth: "40rem" }}>
+              <ListItem
+                key={index}
+                sx={{ minWidth: "40rem", padding: "0 0 1rem" }}
+              >
                 <Grid
                   container
                   sx={{
-                    borderBottom: "1px solid",
+                    borderRadius: "1rem",
+                    padding: "0.5rem",
+                    alignItems: "center",
+                    boxShadow: "inset 0 0 10px -5px #30566d",
                     minWidth: "40rem",
                     width: "100%",
                   }}
@@ -121,7 +128,7 @@ const Panel = () => {
                   <Grid xs={3} item>
                     <Button
                       variant="contained"
-                      color="secondary"
+                      color="primary"
                       onClick={() => {
                         setSelectedUser("id");
                         setUserDialogOpen(true);
@@ -145,11 +152,18 @@ const Panel = () => {
             }}
           >
             {[...new Array(50)].map((item, index) => (
-              <ListItem key={index} sx={{ minWidth: "40rem" }}>
+              <ListItem
+                key={index}
+                sx={{ minWidth: "40rem", padding: "0 0 1rem" }}
+              >
                 <Grid
                   container
                   sx={{
-                    borderBottom: "1px solid",
+                    borderRadius: "1rem",
+                    padding: "0.5rem",
+                    alignItems: "center",
+                    boxShadow: "inset 0 0 10px -5px #30566d",
+                    minWidth: "40rem",
                     width: "100%",
                   }}
                 >
@@ -162,7 +176,7 @@ const Panel = () => {
                   </Grid>
 
                   <Grid xs={5} item>
-                    <Button varinat="contained" color="secondary">
+                    <Button varinat="contained" color="primary">
                       delete task
                     </Button>
                   </Grid>
@@ -173,7 +187,7 @@ const Panel = () => {
 
           <Button
             variant="contained"
-            color="secondary"
+            color="primary"
             sx={{ margin: "1rem auto 0" }}
             onClick={() => setUploadDialogOpen(true)}
           >

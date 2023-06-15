@@ -3,13 +3,13 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#90c7c9",
+      main: "#30566d",
     },
     secondary: {
-      main: "#457b9d",
+      main: "#30566d",
     },
     background: {
-      default: "#f1faee",
+      default: "#D6E4E5",
     },
   },
   shape: {
@@ -17,23 +17,58 @@ const theme = createTheme({
   },
   typography: {
     "*": {
-      color: "#fff",
+      color: "#30566d",
     },
   },
   components: {
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          borderRadius: "1rem",
+          backgroundColor: "#D6E4E5",
+          boxShadow: "0 0 10px -5px #30566d",
+        },
+      },
+    },
+
     MuiCard: {
       styleOverrides: {
         root: {
-          backgroundColor: "#90c7c9",
-          boxShadow: "0 0 10px -5px #457b9d",
-          padding: "0.5rem",
+          backgroundColor: "#D6E4E5",
+          boxShadow: "0 0 10px -5px #30566d",
+          borderRadius: "1rem",
+          padding: "1rem",
 
           "*": {
+            color: "#30566d",
+          },
+
+          "& .MuiButton-containedPrimary": {
             color: "#fff",
+            "& *": {
+              color: "#fff",
+            },
           },
         },
       },
     },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          "&.MuiInputBase-root:before, &.MuiInputBase-root:after": {
+            display: "none",
+          },
+
+          "& .MuiSelect-select": {
+            boxShadow: "inset 0 0 10px -5px #30566d",
+            borderRadius: "1rem",
+            padding: "0.25rem 0.5rem",
+            height: "2rem",
+          },
+        },
+      },
+    },
+
     MuiTextField: {
       styleOverrides: {
         root: {
@@ -41,25 +76,29 @@ const theme = createTheme({
 
           "& *": {
             border: "none",
-            color: "#1d3557 !important",
+            color: "#30566d !important",
           },
 
           "& .MuiInputBase-root": {
-            borderBottom: "2px solid #1d3557",
-            borderRadius: "0",
+            boxShadow: "inset 0 0 10px -5px #30566d",
+            borderRadius: "1rem",
 
             "&:after, &:before": {
               display: "none",
             },
 
             "& input": {
-              padding: "0.5rem 0.5rem 0.25rem !important",
+              padding: "0.5rem !important",
 
               "&.Mui-disabled": {
                 opacity: "0.8",
                 "-webkit-text-fill-color": "unset",
               },
             },
+          },
+
+          "& .MuiInputLabel-root": {
+            padding: "0 0.5rem",
           },
         },
       },
@@ -68,12 +107,14 @@ const theme = createTheme({
       root: {
         "& .MuiButton-root": {
           width: "100%",
+          borderRadius: "1rem",
         },
       },
     },
     MuiButton: {
       styleOverrides: {
         root: {
+          borderRadius: "1rem",
           boxShadow: "none !important",
           transition: "0.4s",
 

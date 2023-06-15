@@ -76,7 +76,7 @@ const UserInfo = () => {
         <Grid container>
           <Grid item xs={6} sx={{ padding: "0 0.5rem" }}>
             <Button
-              color="secondary"
+              color="primary"
               variant="contained"
               onClick={() => setEditMode(!editMode)}
               fullWidth
@@ -88,7 +88,7 @@ const UserInfo = () => {
           <Grid item xs={6} sx={{ padding: "0 0.5rem" }}>
             {editMode && (
               <Button
-                color="secondary"
+                color="primary"
                 variant="contained"
                 onClick={() => {
                   setUserInfo(info);

@@ -30,7 +30,7 @@ export default function Home() {
 
       <Grid item xs={12} sm={6}>
         <Card sx={{ height: "100%", width: "100%" }}>
-          <Typography color="secondary" variant="h6">
+          <Typography color="primary" variant="h6">
             Already Completed
           </Typography>
 
@@ -61,7 +61,7 @@ export default function Home() {
           </CardContent>
 
           <CardActions sx={{ padding: "1rem" }}>
-            <Button variant="contained" color="secondary" fullWidth>
+            <Button variant="contained" color="primary" fullWidth>
               Continue to next task
             </Button>
           </CardActions>

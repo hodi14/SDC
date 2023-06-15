@@ -16,7 +16,7 @@ const Header = () => {
         </Typography>
 
         <Button
-          color="secondary"
+          color="primary"
           variant="contained"
           onClick={() => {
             localStorage.getItem("user") && localStorage.removeItem("user");
