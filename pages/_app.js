@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import axios from "axios";
 
 import { Box } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -11,10 +12,14 @@ import Header from "../components/Header";
 import "../styles/globals.css";
 import Panel from "../components/Panel";
 
+axios.defaults.baseURL = "https://43.202.44.172:8000/";
+
+console.log(process.env.REACT_APP_BASE_API);
+
 function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
