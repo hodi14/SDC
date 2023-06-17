@@ -15,11 +15,9 @@ a {
   box-sizing: border-box;
 }
 
-html {
-  height: 100vh;
-}
 body {
   background: #d6e4e5;
+  overflow: hidden;
 }
 
 input[type="date"]:required:invalid::-webkit-datetime-edit {
@@ -34,6 +32,19 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-box-shadow: inset 0 0 10px 20px #d6e4e5 !important;
+}
+
+.fullHeightContainer {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+.maxHeightContainer {
+  height: 100% !important;
+  flex-grow: 1 !important;
+  overflow: hidden auto !important;
 }
 
 ::-webkit-scrollbar {

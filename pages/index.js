@@ -12,7 +12,7 @@ import {
   useTheme,
 } from "@mui/material";
 
-import ItemCard from "../components/ItemCard";
+import TaskCard from "../components/TaskCard";
 import UserInfo from "../components/UserInfo";
 
 export default function Home() {
@@ -50,7 +50,7 @@ export default function Home() {
                 }}
                 key={index}
               >
-                <ItemCard
+                <TaskCard
                   item={{
                     id: index,
                     title: `task ${index}`,

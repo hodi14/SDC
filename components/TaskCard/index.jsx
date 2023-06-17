@@ -1,7 +1,7 @@
 import { Card, Typography, Button } from "@mui/material";
 import Link from "next/link";
 
-const ItemCard = ({ item }) => {
+const TaskCard = ({ item }) => {
   return (
     <Card>
       <Typography color="primary" sx={{ margin: "0.5rem 0 1rem" }}>
@@ -9,10 +9,10 @@ const ItemCard = ({ item }) => {
       </Typography>
 
       <Button color="primary" variant="contained" fullWidth>
-        <Link href={`/item/${item.id}`}>view Item</Link>
+        <Link href={`/task/${item.id}`}>view Item</Link>
       </Button>
     </Card>
   );
 };
 
-export default ItemCard;
+export default TaskCard;

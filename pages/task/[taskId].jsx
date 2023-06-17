@@ -6,7 +6,7 @@ import { Typography } from "@mui/material";
 import RecorderControls from "../../components/Recorder/Controls";
 import useRecorder from "../../hooks/useRecorder";
 
-const Item = ({ item }) => {
+const Task = ({ item }) => {
   const router = useRouter();
 
   const { recorderState, ...handlers } = useRecorder();
@@ -50,4 +50,4 @@ export async function getStaticProps(context) {
   };
 }
 
-export default Item;
+export default Task;

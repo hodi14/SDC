@@ -16,7 +16,7 @@ import {
   TextField,
 } from "@mui/material";
 
-import ItemCard from "../ItemCard";
+import TaskCard from "../TaskCard";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -61,8 +61,8 @@ const Panel = () => {
   }, []);
 
   return showPanel ? (
-    <Box>
-      <Card>
+    <>
+      <Card className="fullHeightContainer">
         <Tabs
           value={value}
           onChange={handleChange}
@@ -89,10 +89,10 @@ const Panel = () => {
           <Tab label="Tasks" {...a11yProps(1)} />
         </Tabs>
 
-        <TabPanel value={value} index={0}>
+        <TabPanel className="maxHeightContainer" value={value} index={0}>
           <List
             sx={{
-              maxHeight: "calc(100vh - 14rem)",
+              maxHeight: "100%",
               overflow: "auto",
               width: "100%",
             }}
@@ -143,10 +143,10 @@ const Panel = () => {
           </List>
         </TabPanel>
 
-        <TabPanel value={value} index={1}>
+        <TabPanel className="maxHeightContainer" value={value} index={1}>
           <List
             sx={{
-              maxHeight: "calc(100vh - 16rem)",
+              maxHeight: "100%",
               overflow: "auto",
               width: "100%",
             }}
@@ -229,7 +229,7 @@ const Panel = () => {
               }}
               key={index}
             >
-              <ItemCard
+              <TaskCard
                 item={{
                   id: index,
                   title: `task ${index}`,
@@ -261,7 +261,7 @@ const Panel = () => {
 
         <input type="upload" />
       </Dialog>
-    </Box>
+    </>
   ) : null;
 };
 

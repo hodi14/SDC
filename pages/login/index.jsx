@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 import {
   Box,
@@ -73,107 +74,132 @@ const Login = () => {
     )
       setSignupButtonDisabled(true);
     else setLoginButtonDisabled(false);
-  }, [signupButtonDisabled]);
+  }, [signupButtonDisabled, signupInfo]);
 
   useEffect(() => {
     if (localStorage.getItem("user")) router.replace("/");
   }, []);
 
+  const signupHandler = () => {
+    axios
+      .post("signup", {
+        name: signupInfo.name.value,
+      })
+      .catch(() => {
+        alert("something went wrong :(");
+      });
+  };
+
   return (
-    <Box>
-      <Card>
-        <Tabs
-          value={loginTab}
-          onChange={(e, newValue) => setLoginTab(newValue)}
-          textColor="inherit"
-          aria-label="login tabs"
+    <Card className="fullHeightContainer">
+      <Tabs
+        value={loginTab}
+        onChange={(e, newValue) => setLoginTab(newValue)}
+        textColor="inherit"
+        aria-label="login tabs"
+        sx={{
+          "& .MuiButtonBase-root": {
+            width: "50%",
+
+            "&.Mui-selected": {
+              backgroundColor: theme.palette.primary.main,
+              borderRadius: "1rem",
+              color: "#fff",
+            },
+          },
+
+          "& .MuiTabs-indicator": {
+            display: "none",
+          },
+        }}
+      >
+        <Tab label="Login" {...a11yProps(0)} />
+        <Tab label="Sign Up" {...a11yProps(1)} />
+      </Tabs>
+
+      <TabPanel className="maxHeightContainer" value={loginTab} index={0}>
+        <FormGroup>
+          {Object.keys(loginInputs).map((key) => (
+            <TextField
+              variant="standard"
+              key={key}
+              label={loginInputs?.[key].id}
+              placeholder={loginInputs?.[key]?.placeholder}
+              type={loginInputs?.[key]?.type}
+              value={loginInfo?.[key]?.value}
+              onChange={(e) =>
+                setLoginInfo({
+                  ...loginInfo,
+                  [key]: {
+                    ...loginInfo[key],
+                    value: e.target.value,
+                  },
+                })
+              }
+              fullWidth
+            />
+          ))}
+
+          {loginError ? (
+            <Typography sx={{ color: "#be6f6f", fontWeight: "bold" }}>
+              {loginError}
+            </Typography>
+          ) : null}
+        </FormGroup>
+
+        <Button
+          variant="contained"
+          color="primary"
           sx={{
-            "& .MuiButtonBase-root": {
-              width: "50%",
+            display: "block",
+            margin: "1rem auto 0.5rem",
+          }}
+          disabled={loginButtonDisabled}
+          onClick={() => {
+            const inputUser = JSON.stringify({
+              user: loginInfo?.user?.value,
+              password: loginInfo?.password?.value,
+            });
 
-              "&.Mui-selected": {
-                backgroundColor: theme.palette.primary.main,
-                borderRadius: "1rem",
-                color: "#fff",
-              },
-            },
-
-            "& .MuiTabs-indicator": {
-              display: "none",
-            },
+            if (
+              users.some((userData) => JSON.stringify(userData) === inputUser)
+            ) {
+              localStorage.setItem("user", inputUser);
+              router.replace("/");
+            } else setLoginError("User Not Found!!");
           }}
         >
-          <Tab label="Login" {...a11yProps(0)} />
-          <Tab label="Sign Up" {...a11yProps(1)} />
-        </Tabs>
+          Login!
+        </Button>
+      </TabPanel>
 
-        <TabPanel value={loginTab} index={0}>
-          <FormGroup>
-            {Object.keys(loginInputs).map((key) => (
+      <TabPanel className="maxHeightContainer" value={loginTab} index={1}>
+        <FormGroup>
+          {Object.keys(signupInputs).map((key) =>
+            signupInputs?.[key].type !== "select" ? (
               <TextField
                 variant="standard"
                 key={key}
-                label={loginInputs?.[key].id}
-                placeholder={loginInputs?.[key]?.placeholder}
-                type={loginInputs?.[key]?.type}
-                value={loginInfo?.[key]?.value}
+                label={signupInputs?.[key].id}
+                placeholder={signupInputs?.[key]?.placeholder}
+                type={signupInputs?.[key]?.type}
+                value={signupInfo?.[key]?.value}
                 onChange={(e) =>
-                  setLoginInfo({
-                    ...loginInfo,
+                  setSignupInfo({
+                    ...signupInfo,
                     [key]: {
-                      ...loginInfo[key],
+                      ...signupInfo[key],
                       value: e.target.value,
                     },
                   })
                 }
                 fullWidth
               />
-            ))}
-
-            {loginError ? (
-              <Typography sx={{ color: "#be6f6f", fontWeight: "bold" }}>
-                {loginError}
-              </Typography>
-            ) : null}
-          </FormGroup>
-
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              display: "block",
-              margin: "1rem auto 0.5rem",
-            }}
-            disabled={loginButtonDisabled}
-            onClick={() => {
-              const inputUser = JSON.stringify({
-                user: loginInfo?.user?.value,
-                password: loginInfo?.password?.value,
-              });
-
-              if (
-                users.some((userData) => JSON.stringify(userData) === inputUser)
-              ) {
-                localStorage.setItem("user", inputUser);
-                router.replace("/");
-              } else setLoginError("User Not Found!!");
-            }}
-          >
-            Login!
-          </Button>
-        </TabPanel>
-
-        <TabPanel value={loginTab} index={1}>
-          <FormGroup>
-            {Object.keys(signupInputs).map((key) =>
-              signupInputs?.[key].type !== "select" ? (
-                <TextField
-                  variant="standard"
-                  key={key}
+            ) : (
+              <FormControl variant="standard">
+                <InputLabel>{signupInputs?.[key]?.placeholder}</InputLabel>
+                <Select
                   label={signupInputs?.[key].id}
-                  placeholder={signupInputs?.[key]?.placeholder}
-                  type={signupInputs?.[key]?.type}
-                  value={signupInfo?.[key]?.value}
                   onChange={(e) =>
                     setSignupInfo({
                       ...signupInfo,
@@ -183,46 +209,30 @@ const Login = () => {
                       },
                     })
                   }
-                  fullWidth
-                />
-              ) : (
-                <FormControl variant="standard">
-                  <InputLabel>{signupInputs?.[key]?.placeholder}</InputLabel>
-                  <Select
-                    label={signupInputs?.[key].id}
-                    onChange={(e) =>
-                      setSignupInfo({
-                        ...signupInfo,
-                        [key]: {
-                          ...signupInfo[key],
-                          value: e.target.value,
-                        },
-                      })
-                    }
-                  >
-                    {signupInputs?.[key].options.map((option) => (
-                      <MenuItem value={option}>{option}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              )
-            )}
-          </FormGroup>
+                >
+                  {signupInputs?.[key].options.map((option) => (
+                    <MenuItem value={option}>{option}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            )
+          )}
+        </FormGroup>
 
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              display: "block",
-              margin: "1rem auto 0.5rem",
-            }}
-            disabled={signupButtonDisabled}
-          >
-            Sign Up!
-          </Button>
-        </TabPanel>
-      </Card>
-    </Box>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            display: "block",
+            margin: "1rem auto 0.5rem",
+          }}
+          // disabled={signupButtonDisabled}
+          onClick={signupHandler}
+        >
+          Sign Up!
+        </Button>
+      </TabPanel>
+    </Card>
   );
 };
 

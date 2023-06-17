@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <Card
       sx={{
-        margin: "1rem 0",
+        margin: " 0 0 1rem",
       }}
     >
       <Grid container alignItems="center" justifyContent="space-between">

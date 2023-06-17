@@ -1,6 +1,6 @@
-import { createTheme } from "@mui/material/styles";
+export const getDesignTokens = ({ fullHeight }) => ({
+  fullHeight: `calc(${fullHeight}px - env(safe-area-inset-bottom))`,
 
-const theme = createTheme({
   palette: {
     primary: {
       main: "#30566d",
@@ -26,7 +26,7 @@ const theme = createTheme({
         root: {
           borderRadius: "1rem",
           backgroundColor: "#D6E4E5",
-          boxShadow: "0 0 10px -5px #30566d",
+          boxShadow: "inset 0 0 10px -5px #30566d",
         },
       },
     },
@@ -35,7 +35,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: "#D6E4E5",
-          boxShadow: "0 0 10px -5px #30566d",
+          boxShadow: "inset 0 0 10px -5px #30566d",
           borderRadius: "1rem",
           padding: "1rem",
 
@@ -60,16 +60,23 @@ const theme = createTheme({
           },
 
           "& .MuiSelect-select": {
+            height: "2rem",
             boxShadow: "inset 0 0 10px -5px #30566d",
             borderRadius: "1rem",
             padding: "0.25rem 0.5rem",
-            height: "2rem",
           },
         },
       },
     },
 
     MuiTextField: {
+      defaultProps: {
+        autoComplete: "new-password",
+        form: {
+          autoComplete: "off",
+        },
+      },
+
       styleOverrides: {
         root: {
           margin: "0.5rem 0",
@@ -115,11 +122,11 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: "1rem",
-          boxShadow: "none !important",
+          boxShadow: "none",
           transition: "0.4s",
 
           "&:hover": {
-            transform: "scale(1.025)",
+            boxShadow: "0 0 10px -5px #30566d",
             transition: "0.4s",
           },
         },
@@ -127,5 +134,3 @@ const theme = createTheme({
     },
   },
 });
-
-export default theme;
