@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   publicRuntimeConfig: {
     // Will be available on both server and client
-    backendUrl: "https://43.202.44.172:8000/",
+    backendUrl: "http://43.202.44.172:8000/",
   },
 };
 

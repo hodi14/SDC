@@ -18,7 +18,7 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { loginInputs, signupInputs, users } from "../../constants/login";
+import { loginInputs, signupInputs } from "../../constants/login";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -54,6 +54,53 @@ const Login = () => {
   const [signupButtonDisabled, setSignupButtonDisabled] = useState(true);
   const [loginError, setLoginError] = useState(null);
 
+  const signupHandler = () => {
+    axios
+      .post(
+        "signup",
+        JSON.stringify({
+          phone_number: signupInfo?.phone?.value?.toString(),
+          email: signupInfo?.email?.value,
+          name: signupInfo?.name?.value,
+          gender: signupInfo?.gender?.value,
+          birth_year: signupInfo?.birthYear?.value?.toString(),
+          password: signupInfo?.password?.value,
+          study: signupInfo?.study?.value,
+          dailect: signupInfo?.dialect?.value,
+        })
+      )
+      .then((result) => {
+        localStorage.setItem("user", result?.data?.id);
+        router.replace("/");
+
+        alert("succesfuly signed up :)");
+      })
+      .catch(() => {
+        alert("something went wrong :(");
+      });
+  };
+
+  const loginHandler = () => {
+    axios
+      .post("login", {
+        phone_number: loginInfo?.user?.value,
+        email: loginInfo?.user?.value,
+        password: loginInfo?.password?.value,
+      })
+      .then((result) => {
+        if (result?.data?.login === "True") {
+          localStorage.setItem("user", "12345678");
+          router.replace("/");
+          alert("welcome back :)");
+        } else {
+          alert("wrong info!");
+        }
+      })
+      .catch(() => {
+        alert("something went wrong :(");
+      });
+  };
+
   useEffect(() => {
     setLoginError(null);
 
@@ -63,32 +110,26 @@ const Login = () => {
   }, [loginInfo]);
 
   useEffect(() => {
+    setSignupButtonDisabled(false);
+
     if (Object.keys(signupInfo).some((key) => !signupInfo[key]?.value?.length))
       setSignupButtonDisabled(true);
     if (signupInfo?.password?.value?.length < 8) setSignupButtonDisabled(true);
-    if (signupInfo?.password?.phone?.length < 10) setSignupButtonDisabled(true);
     if (
-      !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(
-        signupInfo?.password?.mail?.length
-      )
+      signupInfo?.phone?.length < 10 ||
+      (signupInfo?.phone?.length === 10 &&
+        !signupInfo?.phone?.value.startsWidth("9")) ||
+      (signupInfo?.phone?.length === 11 &&
+        !signupInfo?.phone?.value.startsWidth("09"))
     )
       setSignupButtonDisabled(true);
-    else setLoginButtonDisabled(false);
-  }, [signupButtonDisabled, signupInfo]);
+    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(signupInfo?.email?.value))
+      setSignupButtonDisabled(true);
+  }, [signupInfo]);
 
   useEffect(() => {
     if (localStorage.getItem("user")) router.replace("/");
   }, []);
-
-  const signupHandler = () => {
-    axios
-      .post("signup", {
-        name: signupInfo.name.value,
-      })
-      .catch(() => {
-        alert("something went wrong :(");
-      });
-  };
 
   return (
     <Card className="fullHeightContainer">
@@ -127,6 +168,9 @@ const Login = () => {
               placeholder={loginInputs?.[key]?.placeholder}
               type={loginInputs?.[key]?.type}
               value={loginInfo?.[key]?.value}
+              inputProps={{
+                maxLength: loginInfo?.[key]?.maxLength,
+              }}
               onChange={(e) =>
                 setLoginInfo({
                   ...loginInfo,
@@ -155,19 +199,7 @@ const Login = () => {
             margin: "1rem auto 0.5rem",
           }}
           disabled={loginButtonDisabled}
-          onClick={() => {
-            const inputUser = JSON.stringify({
-              user: loginInfo?.user?.value,
-              password: loginInfo?.password?.value,
-            });
-
-            if (
-              users.some((userData) => JSON.stringify(userData) === inputUser)
-            ) {
-              localStorage.setItem("user", inputUser);
-              router.replace("/");
-            } else setLoginError("User Not Found!!");
-          }}
+          onClick={loginHandler}
         >
           Login!
         </Button>
@@ -184,6 +216,9 @@ const Login = () => {
                 placeholder={signupInputs?.[key]?.placeholder}
                 type={signupInputs?.[key]?.type}
                 value={signupInfo?.[key]?.value}
+                inputProps={{
+                  maxLength: loginInfo?.[key]?.maxLength,
+                }}
                 onChange={(e) =>
                   setSignupInfo({
                     ...signupInfo,
@@ -197,7 +232,9 @@ const Login = () => {
               />
             ) : (
               <FormControl variant="standard">
-                <InputLabel>{signupInputs?.[key]?.placeholder}</InputLabel>
+                <InputLabel sx={{ paddingLeft: "0.5rem" }}>
+                  {signupInputs?.[key]?.placeholder}
+                </InputLabel>
                 <Select
                   label={signupInputs?.[key].id}
                   onChange={(e) =>
@@ -226,7 +263,7 @@ const Login = () => {
             display: "block",
             margin: "1rem auto 0.5rem",
           }}
-          // disabled={signupButtonDisabled}
+          disabled={signupButtonDisabled}
           onClick={signupHandler}
         >
           Sign Up!

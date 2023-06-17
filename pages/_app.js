@@ -13,7 +13,7 @@ import Header from "../components/Header";
 import useFullHeight from "../hooks/useFullHeight";
 import "../styles/globals.css";
 
-axios.defaults.baseURL = "https://43.202.44.172:8000/";
+axios.defaults.baseURL = "http://43.202.44.172:8000/";
 
 function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(true);
@@ -76,7 +76,7 @@ function MyApp({ Component, pageProps }) {
           <Box className="fullHeightContainer">
             <Header />
 
-            <Box sx={{ flexGrow: "1" }}>
+            <Box className="maxHeightContainer">
               {isAdmin ? <Panel /> : <Component {...pageProps} />}
             </Box>
           </Box>

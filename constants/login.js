@@ -1,44 +1,51 @@
 export const signupInputs = {
   name: {
-    id: "name",
-    placeholder: "your name...",
+    id: "full name",
+    placeholder: "full name",
     type: "text",
     required: true,
   },
   email: {
     id: "email",
-    placeholder: "your email...",
+    placeholder: "email",
     type: "email",
     required: true,
   },
   phone: {
     id: "phone",
-    placeholder: "your phone...",
+    placeholder: "phone number",
     type: "tel",
     required: true,
+    maxLength: 11,
   },
   birthYear: {
     id: "birth year",
-    placeholder: "your birth year...",
+    placeholder: "birth year",
     type: "tel",
     required: true,
   },
   gender: {
     id: "gender",
-    placeholder: "your gender...",
+    placeholder: "gender",
     type: "select",
-    options: ["male", "female", "neither"],
+    options: ["male", "female", "other"],
     required: true,
   },
   dialect: {
     id: "dialect",
-    placeholder: "your dialect...",
+    placeholder: "dialect",
     type: "select",
-    options: ["turkish", "kurd", "lor"],
+    options: ["turkish", "kurd", "lor", "other"],
+  },
+  study: {
+    id: "study",
+    placeholder: "education",
+    type: "select",
+    options: ["diploma", "bachelor", "masters", "PHD", "other"],
   },
   password: {
     id: "password",
-    placeholder: "password(at least 8)...",
+    placeholder: "password(at least 8 charachters)",
     type: "password",
     required: true,
   },
@@ -47,13 +54,13 @@ export const signupInputs = {
 export const loginInputs = {
   user: {
     id: "email or phone",
-    placeholder: "your email or phone...",
+    placeholder: "email or phone",
     type: "text",
     required: true,
   },
   password: {
     id: "password",
-    placeholder: "your password...",
+    placeholder: "password",
     type: "password",
     required: true,
   },
@@ -63,22 +70,3 @@ export const adminUser = {
   user: "admin@ut.ac.voice",
   password: "@a$d#M1i2n_",
 };
-
-export const users = [
-  {
-    user: "admin@ut.ac.voice",
-    password: "@a$d#M1i2n_",
-  },
-  {
-    user: "hodaee",
-    password: "hodaee1234",
-  },
-  {
-    user: "aghaee",
-    password: "aghaee1234",
-  },
-  {
-    user: "abdi",
-    password: "abdi1234",
-  },
-];

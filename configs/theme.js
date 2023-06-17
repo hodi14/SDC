@@ -60,7 +60,7 @@ export const getDesignTokens = ({ fullHeight }) => ({
           },
 
           "& .MuiSelect-select": {
-            height: "2rem",
+            height: "2rem !important",
             boxShadow: "inset 0 0 10px -5px #30566d",
             borderRadius: "1rem",
             padding: "0.25rem 0.5rem",
