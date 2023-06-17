@@ -144,7 +144,7 @@ const Login = () => {
   }, []);
 
   return (
-    <Card className="fullHeightContainer">
+    <Card className="fullHeightContainer maxHeightContainer">
       <Tabs
         value={loginTab}
         onChange={(e, newValue) => setLoginTab(newValue)}
@@ -170,8 +170,14 @@ const Login = () => {
         <Tab label="Sign Up" {...a11yProps(1)} />
       </Tabs>
 
-      <TabPanel className="maxHeightContainer" value={loginTab} index={0}>
-        <FormGroup>
+      <TabPanel
+        className={`maxHeightContainer ${
+          loginTab === 0 ? "fullHeightContainer" : ""
+        }`}
+        value={loginTab}
+        index={0}
+      >
+        <FormGroup className={loginTab === 0 ? "maxHeightContainer" : ""}>
           {Object.keys(loginInputs).map((key) => (
             <TextField
               variant="standard"
@@ -217,8 +223,14 @@ const Login = () => {
         </Button>
       </TabPanel>
 
-      <TabPanel className="maxHeightContainer" value={loginTab} index={1}>
-        <FormGroup>
+      <TabPanel
+        className={`maxHeightContainer ${
+          loginTab === 1 ? "fullHeightContainer" : ""
+        }`}
+        value={loginTab}
+        index={1}
+      >
+        <FormGroup className={loginTab === 1 ? "maxHeightContainer" : ""}>
           {Object.keys(signupInputs).map((key) =>
             signupInputs?.[key].type !== "select" ? (
               <TextField
