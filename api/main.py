@@ -10,9 +10,9 @@ import os
 model_api = APIRouter()
 
 
-@app.get("/tasks")
-def tasks():
-    query = """SELECT *
+@app.get("/tasks/{id}")
+def tasks(id: str) -> JSONResponse:
+    query = """SELECT *,now()
         FROM tasks t  
         WHERE t.record_count  = ( SELECT MIN(record_count) FROM tasks )
          AND (last_record is NULL  OR last_record  >= now() - interval 5 minute)
@@ -100,8 +100,8 @@ def signup(data: signup) -> JSONResponse:
         query += " phone=" + "'" + str(data.phone_number) + "'"
         if data.email is not None:
             query += " OR "
-    if data.mail is not None:
-        query += " mail='" + str(data.mail) + "'"
+    if data.email is not None:
+        query += " email='" + str(data.email) + "'"
     mycursor = app.mydb.cursor()
 
     mycursor.execute(query)
@@ -115,19 +115,24 @@ def signup(data: signup) -> JSONResponse:
     query = """
     INSERT INTO users
     (name, gender,email,phone,birth_year,password, study_level, dailect)
-    VALUES ( "%s", "%s" , "%s", "%s", "%s", "%s")
-    """
+    VALUES (  """
     values = [data.name, data.gender, data.email, data.phone_number, data.birth_year, data.password, data.study,
               data.dailect]
     for z, val in enumerate(values):
         if val == None:
             values[z] = "NULL"
-    query = query % tuple(values)
+        query +=' "'+ values[z]+'" ,'
+    query=query[:-1]+")"
     with app.mydb.cursor() as cursor:
         cursor.execute(query)
         app.mydb.commit()
         return JSONResponse(
-            content={"signup": "Successful"}, status_code=200
+            content={"signup": "Successful",
+                     'phone': data.phone_number, 'password': data.password,
+                     'name': data.name, 'email': data.email,
+                     'birth_year': data.birth_year, 'dailect': data.dailect,
+                     'study_level': data.study, 'gender': data.gender,
+                     }, status_code=200
         )
 
 
@@ -136,7 +141,7 @@ def login(data: Auth) -> JSONResponse:
     query = "SELECT * FROM users Where "
     if data.phone_number is not None:
         query += " phone=" + "'" + str(data.phone_number) + "'"
-    elif data.mail is not None:
+    elif data.email is not None:
         query += " mail='" + str(data.mail) + "'"
     else:
         raise Exception("not valid data")
@@ -154,7 +159,11 @@ def login(data: Auth) -> JSONResponse:
 
     if myresult[1] == data.password:
         return JSONResponse(
-            content={"login": "True"}, status_code=200
+            content={"login": "True",
+                     'phone':myresult[0], 'password':myresult[1],
+                     'name':myresult[2], 'email':myresult[3],
+                     'birth_year':myresult[4], 'dailect':myresult[5],
+                     'study_level':myresult[6], 'gender':myresult[7] }, status_code=200
         )
     else:
         return JSONResponse(
