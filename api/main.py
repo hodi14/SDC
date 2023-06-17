@@ -10,8 +10,8 @@ import os
 model_api = APIRouter()
 
 
-@app.get("/tasks")
-def tasks():
+@app.get("/tasks/{id}")
+def tasks(id: str) -> JSONResponse:
     query = """SELECT *,now()
         FROM tasks t  
         WHERE t.record_count  = ( SELECT MIN(record_count) FROM tasks )
