@@ -56,7 +56,7 @@ const Panel = () => {
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
 
   useEffect(() => {
-    if (!localStorage.getItem("user")) router.replace("/");
+    if (!localStorage.getItem("userId")) router.replace("/");
     else setShowPanel(true);
   }, []);
 

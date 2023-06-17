@@ -74,7 +74,7 @@ const Login = () => {
         })
       )
       .then((result) => {
-        localStorage.setItem("user", result?.data?.id);
+        localStorage.setItem("userId", result?.data?.id);
         router.replace("/");
 
         alert("succesfuly signed up :)");
@@ -92,13 +92,15 @@ const Login = () => {
 
     axios
       .post("login", {
-        phone_number: loginInfo?.user?.value,
-        email: loginInfo?.user?.value,
+        phone_number: loginInfo?.userId?.value,
+        email: loginInfo?.userId?.value,
         password: loginInfo?.password?.value,
       })
       .then((result) => {
         if (result?.data?.login === "True") {
-          localStorage.setItem("user", "12345678");
+          localStorage.setItem("userId", loginInfo?.userId?.value);
+          localStorage.setItem("userInfo", JSON.stringify(result?.data));
+
           router.replace("/");
           alert("welcome back :)");
         } else {
@@ -140,7 +142,7 @@ const Login = () => {
   }, [signupInfo]);
 
   useEffect(() => {
-    if (localStorage.getItem("user")) router.replace("/");
+    if (localStorage.getItem("userId")) router.replace("/");
   }, []);
 
   return (
@@ -241,7 +243,7 @@ const Login = () => {
                 type={signupInputs?.[key]?.type}
                 value={signupInfo?.[key]?.value}
                 inputProps={{
-                  maxLength: loginInfo?.[key]?.maxLength,
+                  maxLength: signupInputs?.[key]?.maxLength,
                 }}
                 onChange={(e) =>
                   setSignupInfo({
@@ -261,6 +263,7 @@ const Login = () => {
                 </InputLabel>
                 <Select
                   label={signupInputs?.[key].id}
+                  value={signupInfo?.[key]?.value}
                   onChange={(e) =>
                     setSignupInfo({
                       ...signupInfo,

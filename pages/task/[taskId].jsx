@@ -13,7 +13,7 @@ const Task = ({ item }) => {
   const { audio } = recorderState;
 
   useEffect(() => {
-    if (!localStorage.getItem("user")) router.replace("/login");
+    if (!localStorage.getItem("userId")) router.replace("/login");
   }, []);
 
   return (

@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, createContext } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Head from "next/head";
 import axios from "axios";
 
@@ -9,7 +9,6 @@ import LoopSharpIcon from "@mui/icons-material/LoopSharp";
 
 import { getDesignTokens } from "../configs/theme";
 import { loadingContext } from "../configs/context";
-import { adminUser } from "../constants/login";
 import useFullHeight from "../hooks/useFullHeight";
 
 import Panel from "../components/Panel";
@@ -20,7 +19,7 @@ axios.defaults.baseURL = "http://43.202.44.172:8000/";
 
 function MyApp({ Component, pageProps }) {
   const [loading, setLoading] = useState(true);
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [apiLoading, setApiLoading] = useState(false);
 
@@ -36,10 +35,21 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     setTimeout(() => {
-      // setLoggedIn(localStorage.getItem("user"));
-      setIsAdmin(localStorage.getItem("user") == JSON.stringify(adminUser));
-      setLoading(false);
+      setLoggedIn(localStorage.getItem("userId"));
+      setIsAdmin(localStorage.getItem("userId") == "o9732813xdh81d");
     }, 2000);
+
+    axios
+      .get("/tasks")
+      .then((result) => {
+        console.log("tasks: ", result);
+      })
+      .catch(() => {
+        alert("something went wrong :(");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   return (

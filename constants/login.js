@@ -4,12 +4,14 @@ export const signupInputs = {
     placeholder: "full name",
     type: "text",
     required: true,
+    value: "",
   },
   email: {
     id: "email",
     placeholder: "email",
     type: "email",
     required: true,
+    value: "",
   },
   phone: {
     id: "phone",
@@ -17,12 +19,14 @@ export const signupInputs = {
     type: "tel",
     required: true,
     maxLength: 11,
+    value: "",
   },
-  birthYear: {
+  birth_year: {
     id: "birth year",
     placeholder: "birth year",
     type: "tel",
     required: true,
+    value: "",
   },
   gender: {
     id: "gender",
@@ -30,29 +34,33 @@ export const signupInputs = {
     type: "select",
     options: ["male", "female", "other"],
     required: true,
+    value: "",
   },
   dialect: {
     id: "dialect",
     placeholder: "dialect",
     type: "select",
     options: ["turkish", "kurd", "lor", "other"],
+    value: "",
   },
-  study: {
+  study_level: {
     id: "study",
     placeholder: "education",
     type: "select",
     options: ["diploma", "bachelor", "masters", "PHD", "other"],
+    value: "",
   },
   password: {
     id: "password",
     placeholder: "password(at least 8 charachters)",
     type: "password",
     required: true,
+    value: "",
   },
 };
 
 export const loginInputs = {
-  user: {
+  userId: {
     id: "email or phone",
     placeholder: "email or phone",
     type: "text",
@@ -64,9 +72,4 @@ export const loginInputs = {
     type: "password",
     required: true,
   },
-};
-
-export const adminUser = {
-  user: "admin@ut.ac.voice",
-  password: "@a$d#M1i2n_",
 };

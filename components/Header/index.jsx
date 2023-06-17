@@ -19,11 +19,11 @@ const Header = () => {
           color="primary"
           variant="contained"
           onClick={() => {
-            localStorage.getItem("user") && localStorage.removeItem("user");
+            localStorage.getItem("userId") && localStorage.removeItem("userId");
             window.location.reload();
           }}
         >
-          {localStorage.getItem("user") ? (
+          {localStorage.getItem("userId") ? (
             "Logout"
           ) : (
             <Link href="/login">Login</Link>
