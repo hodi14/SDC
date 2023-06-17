@@ -16,7 +16,8 @@ a {
 }
 
 body {
-  background: #d6e4e5;
+  background: #d6e4e5 !important;
+  color: #30566d !important;
   overflow: hidden;
 }
 
@@ -24,7 +25,7 @@ input[type="date"]:required:invalid::-webkit-datetime-edit {
   color: transparent;
 }
 input[type="date"]:focus::-webkit-datetime-edit {
-  color: black !important;
+  color: #30566d !important;
 }
 
 input:-webkit-autofill,
@@ -45,6 +46,36 @@ input:-webkit-autofill:active {
   height: 100% !important;
   flex-grow: 1 !important;
   overflow: hidden auto !important;
+}
+
+.apiLoading {
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #d6e4e53d;
+  backdrop-filter: blur(4px);
+  height: 100vh;
+  width: 100vw;
+  z-index: 1000;
+}
+.apiLoading svg {
+  height: 5rem;
+  width: 5rem;
+  animation: rotate 2s infinite;
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 ::-webkit-scrollbar {

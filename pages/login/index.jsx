@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 
@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 
 import { loginInputs, signupInputs } from "../../constants/login";
+import { loadingContext } from "../../configs/context";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -46,6 +47,7 @@ const a11yProps = (index) => {
 const Login = () => {
   const theme = useTheme();
   const router = useRouter();
+  const { apiLoading, setApiLoading } = useContext(loadingContext);
 
   const [loginTab, setLoginTab] = useState(0);
   const [loginInfo, setLoginInfo] = useState(loginInputs);
@@ -55,6 +57,8 @@ const Login = () => {
   const [loginError, setLoginError] = useState(null);
 
   const signupHandler = () => {
+    setApiLoading(true);
+
     axios
       .post(
         "signup",
@@ -77,10 +81,15 @@ const Login = () => {
       })
       .catch(() => {
         alert("something went wrong :(");
+      })
+      .finally(() => {
+        setApiLoading(false);
       });
   };
 
   const loginHandler = () => {
+    setApiLoading(true);
+
     axios
       .post("login", {
         phone_number: loginInfo?.user?.value,
@@ -98,6 +107,9 @@ const Login = () => {
       })
       .catch(() => {
         alert("something went wrong :(");
+      })
+      .finally(() => {
+        setApiLoading(false);
       });
   };
 

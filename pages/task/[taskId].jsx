@@ -31,7 +31,7 @@ const Task = ({ item }) => {
 
 export async function getStaticPaths() {
   const paths = [];
-  for (let i = 1; i < 12; i++) paths.push({ params: { itemId: i.toString() } });
+  for (let i = 1; i < 12; i++) paths.push({ params: { taskId: i.toString() } });
 
   return {
     paths,
