@@ -20,6 +20,10 @@ const UserInfo = () => {
   const [userInputs, setUserInputs] = useState(signupInputs);
 
   useEffect(() => {
+    defaultInputValues();
+  }, []);
+
+  const defaultInputValues = () => {
     if (localStorage.getItem("userInfo")) {
       Object.keys(JSON.parse(localStorage.getItem("userInfo"))).map((key) => {
         setUserInputs((prevState) => ({
@@ -31,10 +35,10 @@ const UserInfo = () => {
         }));
       });
     }
-  }, []);
+  };
 
   return (
-    <Card className="fullHeightContainer">
+    <Card className="fullHeightContainer" sx={{ padding: "0" }}>
       <CardContent className="maxHeightContainer">
         {Object.keys(userInputs).map((key) =>
           userInputs?.[key].type !== "select" ? (
@@ -89,7 +93,7 @@ const UserInfo = () => {
         )}
       </CardContent>
 
-      <CardActions>
+      <CardActions sx={{ padding: "1rem" }}>
         <Grid container>
           <Grid item xs={editMode ? 6 : 12} sx={{ padding: "0 0.5rem" }}>
             <Button
@@ -108,7 +112,7 @@ const UserInfo = () => {
                 color="primary"
                 variant="contained"
                 onClick={() => {
-                  setUserInfo(info);
+                  defaultInputValues();
                   setEditMode(false);
                 }}
                 fullWidth

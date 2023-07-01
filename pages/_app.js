@@ -18,7 +18,6 @@ import "../styles/globals.css";
 axios.defaults.baseURL = "http://43.202.44.172:8000/";
 
 function MyApp({ Component, pageProps }) {
-  const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [apiLoading, setApiLoading] = useState(false);
@@ -39,8 +38,9 @@ function MyApp({ Component, pageProps }) {
       setIsAdmin(localStorage.getItem("userId") == "o9732813xdh81d");
     }, 2000);
 
+    setApiLoading(true);
     axios
-      .get("/tasks")
+      .get(`/tasks/${localStorage.getItem("userId")}`)
       .then((result) => {
         console.log("tasks: ", result);
       })
@@ -48,7 +48,7 @@ function MyApp({ Component, pageProps }) {
         alert("something went wrong :(");
       })
       .finally(() => {
-        setLoading(false);
+        setApiLoading(false);
       });
   }, []);
 
@@ -70,28 +70,25 @@ function MyApp({ Component, pageProps }) {
             overflow: "hidden",
           }}
         >
-          {apiLoading && (
+          {apiLoading ? (
             <Box className="apiLoading">
-              <LoopSharpIcon />
-            </Box>
-          )}
-          {loading ? (
-            <Box
-              sx={{
-                position: "fixed",
-                top: "50%",
-                left: "50%",
-                maxWidth: "24rem",
-                transform: "translate(-50%, -50%)",
-                width: "calc(100% - 2rem)",
+              <Box
+                sx={{
+                  position: "fixed",
+                  top: "50%",
+                  left: "50%",
+                  maxWidth: "24rem",
+                  transform: "translate(-50%, -50%)",
+                  width: "calc(100% - 2rem)",
 
-                "& span": {
-                  borderRadius: "0.5rem !important",
-                  height: "1rem !important",
-                },
-              }}
-            >
-              <LinearProgress />
+                  "& span": {
+                    borderRadius: "0.5rem !important",
+                    height: "1rem !important",
+                  },
+                }}
+              >
+                <LinearProgress />
+              </Box>
             </Box>
           ) : (
             <Box className="fullHeightContainer">

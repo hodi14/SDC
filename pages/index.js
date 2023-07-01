@@ -20,12 +20,14 @@ import UserInfo from "../components/UserInfo";
 export default function Home() {
   const router = useRouter();
   const { apiLoading, setApiLoading } = useContext(loadingContext);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [userTasks, setUserTasks] = useState([]);
 
   useEffect(() => {
     if (!localStorage.getItem("userId")) router.replace("/login");
     else {
+      setIsLoggedIn(true);
       setApiLoading(true);
       axios
         .get(`/tasks_list/${localStorage.getItem("userId")}`)
@@ -33,7 +35,7 @@ export default function Home() {
           setUserTasks(result?.data);
         })
         .catch(() => {
-          alert("something went wrong :(");
+          // alert("something went wrong :(");
         })
         .finally(() => {
           setApiLoading(false);
@@ -41,7 +43,7 @@ export default function Home() {
     }
   }, []);
 
-  return localStorage.getItem("userId") ? (
+  return isLoggedIn ? (
     <Grid
       container
       spacing="1rem"
@@ -51,12 +53,40 @@ export default function Home() {
         overflow: "hidden",
       }}
     >
-      <Grid item xs={12} sm={6} sx={{ height: "100%" }}>
+      <Grid
+        item
+        xs={12}
+        sm={6}
+        sx={{
+          height: "100%",
+          padding: "0",
+          "@media(max-width: 600px)": {
+            maxHeight: "50%",
+          },
+        }}
+      >
         <UserInfo />
       </Grid>
 
-      <Grid item xs={12} sm={6} sx={{ height: "100%" }}>
-        <Card sx={{ height: "100%", width: "100%" }}>
+      <Grid
+        item
+        xs={12}
+        sm={6}
+        sx={{
+          height: "100%",
+          "@media(max-width: 600px)": {
+            maxHeight: "50%",
+          },
+        }}
+      >
+        <Card
+          sx={{
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <Typography color="primary" variant="h6">
             Already Completed
           </Typography>
@@ -64,7 +94,7 @@ export default function Home() {
           <CardContent
             sx={{
               overflow: "auto",
-              maxHeight: "calc(min(30rem, calc(100vh - 8rem)))",
+              flexGrow: "1",
               padding: "0.5rem",
             }}
           >
@@ -93,7 +123,7 @@ export default function Home() {
             )}
           </CardContent>
 
-          <CardActions sx={{ padding: "1rem" }}>
+          <CardActions sx={{ padding: "0" }}>
             <Button variant="contained" color="primary" fullWidth>
               Continue to next task
             </Button>
