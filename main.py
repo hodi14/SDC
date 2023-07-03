@@ -5,9 +5,17 @@ from dotenv import load_dotenv
 from api import router
 from app import app, logger
 import mysql.connector
+from fastapi.middleware.cors import CORSMiddleware
 
+origins = ["*"]
 
-
+app.add_middleware(
+            CORSMiddleware,
+                allow_origins=origins,
+                allow_credentials=True,
+               allow_methods=["*"],
+                allow_headers=["*"],
+            )
 
 __author__ = "Fwad abdi"
 
@@ -37,7 +45,7 @@ def startup() -> None:
         app.mydb = mysql.connector.connect(
         host="localhost",
         user="root",
-        password="root",
+        password="password",
         database="DB"
         )
         if not checkTableExists( app.mydb,"tasks"):
