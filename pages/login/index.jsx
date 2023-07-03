@@ -179,7 +179,12 @@ const Login = () => {
         value={loginTab}
         index={0}
       >
-        <FormGroup className={loginTab === 0 ? "maxHeightContainer" : ""}>
+        <FormGroup
+          className={loginTab === 0 ? "maxHeightContainer" : ""}
+          sx={{
+            display: "block",
+          }}
+        >
           {Object.keys(loginInputs).map((key) => (
             <TextField
               variant="standard"
@@ -232,7 +237,12 @@ const Login = () => {
         value={loginTab}
         index={1}
       >
-        <FormGroup className={loginTab === 1 ? "maxHeightContainer" : ""}>
+        <FormGroup
+          className={loginTab === 1 ? "maxHeightContainer" : ""}
+          sx={{
+            display: "block",
+          }}
+        >
           {Object.keys(signupInputs).map((key) =>
             signupInputs?.[key].type !== "select" ? (
               <TextField
@@ -257,7 +267,7 @@ const Login = () => {
                 fullWidth
               />
             ) : (
-              <FormControl variant="standard">
+              <FormControl variant="standard" sx={{ display: "flex" }}>
                 <InputLabel sx={{ paddingLeft: "0.5rem" }}>
                   {signupInputs?.[key]?.placeholder}
                 </InputLabel>
