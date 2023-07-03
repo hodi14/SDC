@@ -12,10 +12,10 @@ model_api = APIRouter()
 
 @app.get("/tasks/{id}")
 def tasks(id: str) -> JSONResponse:
-    query = """SELECT *,now()
+    query = """SELECT *
         FROM tasks t  
         WHERE t.record_count  = ( SELECT MIN(record_count) FROM tasks )
-         AND (last_record is NULL  OR last_record  >= now() - interval 5 minute)
+         AND (last_record is NULL  OR now() >= last_record + interval 5 minute)
          LIMIT 1;"""
     mycursor = app.mydb.cursor()
 
@@ -25,8 +25,8 @@ def tasks(id: str) -> JSONResponse:
 
     query = """UPDATE tasks
             SET last_record = '""" + time.strftime('%Y-%m-%d %H:%M:%S') + """'
-            WHERE id >=""" + str(min([i[-1] for i in myresult])) + """ AND id<= """ + str(
-        max([i[-1] for i in myresult]))
+            WHERE id =""" + str(min([i[-1] for i in myresult]))# + """ AND id<= """ + str(
+    #    max([i[-1] for i in myresult]))
     mycursor = app.mydb.cursor()
 
     mycursor.execute(query)
@@ -128,10 +128,10 @@ def signup(data: signup) -> JSONResponse:
         app.mydb.commit()
         return JSONResponse(
             content={"signup": "Successful",
-                     'phone': data.phone_number, 'password': data.password,
-                     'name': data.name, 'email': data.email,
-                     'birth_year': data.birth_year, 'dailect': data.dailect,
-                     'study_level': data.study, 'gender': data.gender,
+                #     'phone': data.phone_number, 'password': data.password,
+                 #    'name': data.name, 'email': data.email,
+                  #   'birth_year': data.birth_year, 'dailect': data.dailect,
+                   #  'study_level': data.study, 'gender': data.gender,
                      }, status_code=200
         )
 
@@ -183,7 +183,7 @@ def user_list() -> JSONResponse:
 
 @model_api.get("/tasks_list/{id}")
 def user_tasks(id: str) -> JSONResponse:
-    query = "SELECT * FROM recorded where user_phone" + id + " or mail=" + id
+    query = "SELECT * FROM recorded where user_phone='" + id + "' or user_email='" + id+"'"
     mycursor = app.mydb.cursor()
     mycursor.execute(query)
     myresult = mycursor.fetchall()
