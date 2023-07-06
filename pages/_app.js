@@ -46,6 +46,7 @@ function MyApp({ Component, pageProps }) {
           console.log("tasks: ", result);
         })
         .catch(() => {
+          setApiLoading(false);
           alert("something went wrong :(");
         })
         .finally(() => {

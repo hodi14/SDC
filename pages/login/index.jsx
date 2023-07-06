@@ -80,6 +80,7 @@ const Login = () => {
         alert("succesfuly signed up :)");
       })
       .catch(() => {
+        setApiLoading(false);
         alert("something went wrong :(");
       })
       .finally(() => {
@@ -108,6 +109,7 @@ const Login = () => {
         }
       })
       .catch(() => {
+        setApiLoading(false);
         alert("something went wrong :(");
       })
       .finally(() => {
