@@ -5,6 +5,15 @@ const nextConfig = {
     // Will be available on both server and client
     backendUrl: "http://43.202.44.172:8000/",
   },
+
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "http://43.202.44.172:8000/:path*",
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
