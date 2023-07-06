@@ -38,18 +38,20 @@ function MyApp({ Component, pageProps }) {
       setIsAdmin(localStorage.getItem("userId") == "o9732813xdh81d");
     }, 2000);
 
-    setApiLoading(true);
-    axios
-      .get(`/tasks/${localStorage.getItem("userId")}`)
-      .then((result) => {
-        console.log("tasks: ", result);
-      })
-      .catch(() => {
-        alert("something went wrong :(");
-      })
-      .finally(() => {
-        setApiLoading(false);
-      });
+    if (localStorage.getItem("userId")) {
+      setApiLoading(true);
+      axios
+        .get(`/tasks/${localStorage.getItem("userId")}`)
+        .then((result) => {
+          console.log("tasks: ", result);
+        })
+        .catch(() => {
+          alert("something went wrong :(");
+        })
+        .finally(() => {
+          setApiLoading(false);
+        });
+    }
   }, []);
 
   return (
