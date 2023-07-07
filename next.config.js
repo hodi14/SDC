@@ -3,14 +3,14 @@ const nextConfig = {
   reactStrictMode: true,
   publicRuntimeConfig: {
     // Will be available on both server and client
-    backendUrl: "http://43.202.44.172:8000/",
+    backendUrl: "https://43.202.44.172:8810/",
   },
 
   async rewrites() {
     return [
       {
         source: "/:path*",
-        destination: "http://43.202.44.172:8000/:path*",
+        destination: "https://43.202.44.172:8810/:path*",
       },
     ];
   },

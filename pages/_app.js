@@ -15,7 +15,7 @@ import Panel from "../components/Panel";
 import Header from "../components/Header";
 import "../styles/globals.css";
 
-axios.defaults.baseURL = "http://43.202.44.172:8000/";
+axios.defaults.baseURL = "https://43.202.44.172:8810/";
 
 function MyApp({ Component, pageProps }) {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -61,6 +61,7 @@ function MyApp({ Component, pageProps }) {
         <Head>
           <title>Voice Recognition</title>
           <meta name="description" content="Voice Recognition App" />
+
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
