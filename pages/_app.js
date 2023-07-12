@@ -15,7 +15,7 @@ import Panel from "../components/Panel";
 import Header from "../components/Header";
 import "../styles/globals.css";
 
-axios.defaults.baseURL = "https://43.202.44.172:8810/";
+axios.defaults.baseURL = "http://43.202.44.172:8000/";
 
 function MyApp({ Component, pageProps }) {
   const [loggedIn, setLoggedIn] = useState(false);
