@@ -99,7 +99,7 @@ export const getDesignTokens = ({ fullHeight }) => ({
 
               "&.Mui-disabled": {
                 opacity: "0.8",
-                "-webkit-text-fill-color": "unset",
+                WebkitTextFillColor: "unset",
               },
             },
           },

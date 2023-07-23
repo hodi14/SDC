@@ -35,7 +35,7 @@ export default function Home() {
           setUserTasks(result?.data);
         })
         .catch(() => {
-          // alert("something went wrong :(");
+          // toast.error('something went wrong');
         })
         .finally(() => {
           setApiLoading(false);

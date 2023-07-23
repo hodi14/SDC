@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import {
   Box,
@@ -81,7 +82,7 @@ const Login = () => {
       })
       .catch(() => {
         setApiLoading(false);
-        alert("something went wrong :(");
+        toast.error("something went wrong");
       })
       .finally(() => {
         setApiLoading(false);
@@ -96,6 +97,13 @@ const Login = () => {
         phone_number: loginInfo?.userId?.value,
         email: loginInfo?.userId?.value,
         password: loginInfo?.password?.value,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          // "Access-Control-Request-Method": "*",
+          "Access-Control-Allow-Methods": "*",
+          "Access-Control-Allow-Headers": "*",
+        },
       })
       .then((result) => {
         if (result?.data?.login === "True") {
@@ -110,7 +118,7 @@ const Login = () => {
       })
       .catch(() => {
         setApiLoading(false);
-        alert("something went wrong :(");
+        toast.error("something went wrong");
       })
       .finally(() => {
         setApiLoading(false);

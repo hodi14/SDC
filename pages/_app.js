@@ -1,23 +1,25 @@
 import { useEffect, useState, useMemo } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
 import axios from "axios";
 
 import { Box } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import LoopSharpIcon from "@mui/icons-material/LoopSharp";
 
 import { getDesignTokens } from "../configs/theme";
 import { loadingContext } from "../configs/context";
+import { setupInterceptorsTo } from "../configs/configAxios";
 import useFullHeight from "../hooks/useFullHeight";
 
 import Panel from "../components/Panel";
 import Header from "../components/Header";
 import "../styles/globals.css";
 
-axios.defaults.baseURL = "https://43.202.44.172:8810/";
-
 function MyApp({ Component, pageProps }) {
+  setupInterceptorsTo(axios);
+
   const [loggedIn, setLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [apiLoading, setApiLoading] = useState(false);
@@ -47,7 +49,7 @@ function MyApp({ Component, pageProps }) {
         })
         .catch(() => {
           setApiLoading(false);
-          alert("something went wrong :(");
+          toast.error("something went wrong");
         })
         .finally(() => {
           setApiLoading(false);
@@ -57,6 +59,19 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <loadingContext.Provider value={value}>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        limit={2}
+      />
       <ThemeProvider theme={theme}>
         <Head>
           <title>Voice Recognition</title>
