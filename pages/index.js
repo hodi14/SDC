@@ -20,28 +20,28 @@ import UserInfo from "../components/UserInfo";
 export default function Home() {
   const router = useRouter();
   const { apiLoading, setApiLoading } = useContext(loadingContext);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const [userTasks, setUserTasks] = useState([]);
 
-  useEffect(() => {
-    if (!localStorage.getItem("userId")) router.replace("/login");
-    else {
-      setIsLoggedIn(true);
-      setApiLoading(true);
-      axios
-        .get(`/tasks_list/${localStorage.getItem("userId")}`)
-        .then((result) => {
-          setUserTasks(result?.data);
-        })
-        .catch(() => {
-          // toast.error('something went wrong');
-        })
-        .finally(() => {
-          setApiLoading(false);
-        });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!localStorage.getItem("userId")) router.replace("/login");
+  //   else {
+  //     setIsLoggedIn(true);
+  //     setApiLoading(true);
+  //     axios
+  //       .get(`/tasks_list/${localStorage.getItem("userId")}`)
+  //       .then((result) => {
+  //         setUserTasks(result?.data);
+  //       })
+  //       .catch(() => {
+  //         // toast.error('something went wrong');
+  //       })
+  //       .finally(() => {
+  //         setApiLoading(false);
+  //       });
+  //   }
+  // }, []);
 
   return isLoggedIn ? (
     <Grid
@@ -87,9 +87,11 @@ export default function Home() {
             flexDirection: "column",
           }}
         >
-          <Typography color="primary" variant="h6">
-            Already Completed
-          </Typography>
+          {userTasks?.length ? (
+            <Typography color="primary" variant="h6">
+              Already Completed
+            </Typography>
+          ) : null}
 
           <CardContent
             sx={{
@@ -125,7 +127,7 @@ export default function Home() {
 
           <CardActions sx={{ padding: "0" }}>
             <Button variant="contained" color="primary" fullWidth>
-              Continue to next task
+              {userTasks?.length ? "Continue to next task" : "Go to first task"}
             </Button>
           </CardActions>
         </Card>
