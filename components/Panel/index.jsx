@@ -50,15 +50,15 @@ const Panel = () => {
     setValue(newValue);
   };
 
-  const [showPanel, setShowPanel] = useState(false);
+  const [showPanel, setShowPanel] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
   const [userDialogOpen, setUserDialogOpen] = useState(false);
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
 
-  useEffect(() => {
-    if (!localStorage.getItem("userId")) router.replace("/");
-    else setShowPanel(true);
-  }, []);
+  // useEffect(() => {
+  //   if (!localStorage.getItem("userId")) router.replace("/");
+  //   else setShowPanel(true);
+  // }, []);
 
   return showPanel ? (
     <>
@@ -118,11 +118,11 @@ const Panel = () => {
                   </Grid>
 
                   <Grid xs={3} item>
-                    name
+                    name-{index}
                   </Grid>
 
                   <Grid xs={5} item>
-                    user@gmail.com
+                    user-{index}@gmail.com
                   </Grid>
 
                   <Grid xs={3} item>
@@ -143,7 +143,13 @@ const Panel = () => {
           </List>
         </TabPanel>
 
-        <TabPanel className="maxHeightContainer" value={value} index={1}>
+        <TabPanel
+          className={`maxHeightContainer ${
+            value === 1 ? "fullHeightContainer" : ""
+          }`}
+          value={value}
+          index={1}
+        >
           <List
             sx={{
               maxHeight: "100%",
@@ -167,16 +173,20 @@ const Panel = () => {
                     width: "100%",
                   }}
                 >
-                  <Grid xs={3} item>
+                  <Grid xs={1} item>
                     {index}
                   </Grid>
 
-                  <Grid xs={4} item>
-                    {index * 100} users taken
+                  <Grid xs={3} item>
+                    task-name-{index}
                   </Grid>
 
-                  <Grid xs={5} item>
-                    <Button varinat="contained" color="primary">
+                  <Grid xs={4} item>
+                    {index * 10 + (index % 2)} users taken
+                  </Grid>
+
+                  <Grid xs={4} item>
+                    <Button variant="contained" color="primary">
                       delete task
                     </Button>
                   </Grid>
@@ -189,6 +199,7 @@ const Panel = () => {
             variant="contained"
             color="primary"
             sx={{ margin: "1rem auto 0" }}
+            fullWidth
             onClick={() => setUploadDialogOpen(true)}
           >
             Upload new task
@@ -207,9 +218,8 @@ const Panel = () => {
           },
         }}
       >
-        <Typography>
-          Tasks done:
-          <span>12</span>
+        <Typography sx={{ fontSize: "1.2rem" }}>
+          List of Tasks this user has taken(<span>12</span>)
         </Typography>
 
         <List
@@ -251,6 +261,10 @@ const Panel = () => {
           },
         }}
       >
+        <Typography sx={{ fontSize: "1.2rem" }}>
+          Upload the file for the new task(.HTML or .txt)
+        </Typography>
+
         <TextField
           variant="standard"
           label="task title"
@@ -259,7 +273,13 @@ const Panel = () => {
           fullWidth
         />
 
-        <input type="upload" />
+        <TextField
+          variant="standard"
+          label="task file"
+          placeholder="task file"
+          type="file"
+          fullWidth
+        />
       </Dialog>
     </>
   ) : null;

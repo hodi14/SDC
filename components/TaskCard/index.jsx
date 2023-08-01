@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const TaskCard = ({ item }) => {
   return (
-    <Card>
+    <Card sx={{ width: "100%" }}>
       <Typography color="primary" sx={{ margin: "0.5rem 0 1rem" }}>
         {item.title}
       </Typography>
