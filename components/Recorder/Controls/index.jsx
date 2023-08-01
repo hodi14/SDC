@@ -43,7 +43,7 @@ const RecorderControls = ({ recorderState, handlers, audio }) => {
         <Grid item xs={6}>
           <Typography
             sx={{
-              backgroundColor: theme.palette.primary.main,
+              color: theme.palette.primary.main,
               borderRadius: "0.5rem",
               fontWeight: "bold",
               margin: "0.5rem",
