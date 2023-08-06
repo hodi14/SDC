@@ -24,24 +24,24 @@ export default function Home() {
 
   const [userTasks, setUserTasks] = useState([]);
 
-  // useEffect(() => {
-  //   if (!localStorage.getItem("userId")) router.replace("/login");
-  //   else {
-  //     setIsLoggedIn(true);
-  //     setApiLoading(true);
-  //     axios
-  //       .get(`/tasks_list/${localStorage.getItem("userId")}`)
-  //       .then((result) => {
-  //         setUserTasks(result?.data);
-  //       })
-  //       .catch(() => {
-  //         // toast.error('something went wrong');
-  //       })
-  //       .finally(() => {
-  //         setApiLoading(false);
-  //       });
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!localStorage.getItem("userId")) router.replace("/login");
+    else {
+      setIsLoggedIn(true);
+      setApiLoading(true);
+      axios
+        .get(`/tasks_list/${localStorage.getItem("userId")}`)
+        .then((result) => {
+          setUserTasks(result?.data);
+        })
+        .catch(() => {
+          // toast.error('something went wrong');
+        })
+        .finally(() => {
+          setApiLoading(false);
+        });
+    }
+  }, []);
 
   return isLoggedIn ? (
     <Grid
