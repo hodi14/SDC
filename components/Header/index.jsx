@@ -27,7 +27,10 @@ const Header = () => {
           color="primary"
           variant="contained"
           onClick={() => {
-            checkLoggedIn() && localStorage?.removeItem("userId");
+            if (checkLoggedIn()) {
+              localStorage?.removeItem("userId");
+              localStorage?.removeItem("userInfo");
+            }
             window.location.reload();
           }}
         >

@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import axios from "axios";
 
 import {
@@ -10,13 +11,13 @@ import {
   Typography,
   Box,
   Button,
-  useTheme,
 } from "@mui/material";
 
 import { loadingContext } from "../configs/context";
 import TaskCard from "../components/TaskCard";
 import UserInfo from "../components/UserInfo";
 import { checkLoggedIn } from "../utils/checkLoggedIn";
+import empty from "../assets/images/empty.svg";
 
 export default function Home() {
   const router = useRouter();
@@ -120,9 +121,20 @@ export default function Home() {
                 </Box>
               ))
             ) : (
-              <Typography color="primary" variant="h6">
-                You're New !!
-              </Typography>
+              <>
+                <Typography color="primary" variant="h6">
+                  You're New !!
+                </Typography>
+
+                <Image
+                  style={{
+                    height: "calc(100% - 3rem)",
+                    width: "100%",
+                  }}
+                  src={empty}
+                  alt="empty"
+                />
+              </>
             )}
           </CardContent>
 

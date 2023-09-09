@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Image from "next/image";
 
 import {
   Box,
@@ -22,6 +23,8 @@ import {
 import { loginInputs, signupInputs } from "../../constants/login";
 import { loadingContext } from "../../configs/context";
 import { checkLoggedIn } from "../../utils/checkLoggedIn";
+import login from "../../assets/images/login.svg";
+import signup from "../../assets/images/signup.svg";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -216,38 +219,59 @@ const Login = () => {
         <FormGroup
           className={loginTab === 0 ? "maxHeightContainer" : ""}
           sx={{
-            display: "block",
+            alignItems: "center",
+
+            "@media(max-width: 576px)": {
+              flexDirection: "column-reverse !important",
+
+              "& img": { maxHeight: "15rem !important" },
+            },
           }}
         >
-          {Object.keys(loginInputs).map((key) => (
-            <TextField
-              variant="standard"
-              key={key}
-              label={loginInputs?.[key].id}
-              placeholder={loginInputs?.[key]?.placeholder}
-              type={loginInputs?.[key]?.type}
-              value={loginInfo?.[key]?.value}
-              inputProps={{
-                maxLength: loginInfo?.[key]?.maxLength,
-              }}
-              onChange={(e) =>
-                setLoginInfo({
-                  ...loginInfo,
-                  [key]: {
-                    ...loginInfo[key],
-                    value: e.target.value,
-                  },
-                })
-              }
-              fullWidth
-            />
-          ))}
+          <Box
+            sx={{
+              flexGrow: "1",
+            }}
+          >
+            {Object.keys(loginInputs).map((key) => (
+              <TextField
+                variant="standard"
+                key={key}
+                label={loginInputs?.[key].id}
+                placeholder={loginInputs?.[key]?.placeholder}
+                type={loginInputs?.[key]?.type}
+                value={loginInfo?.[key]?.value}
+                inputProps={{
+                  maxLength: loginInfo?.[key]?.maxLength,
+                }}
+                onChange={(e) =>
+                  setLoginInfo({
+                    ...loginInfo,
+                    [key]: {
+                      ...loginInfo[key],
+                      value: e.target.value,
+                    },
+                  })
+                }
+                fullWidth
+              />
+            ))}
 
-          {loginError ? (
-            <Typography sx={{ color: "#be6f6f", fontWeight: "bold" }}>
-              {loginError}
-            </Typography>
-          ) : null}
+            {loginError ? (
+              <Typography sx={{ color: "#be6f6f", fontWeight: "bold" }}>
+                {loginError}
+              </Typography>
+            ) : null}
+          </Box>
+
+          <Image
+            style={{
+              maxWidth: "20rem",
+              width: "100%",
+            }}
+            src={login}
+            alt="login"
+          />
         </FormGroup>
 
         <Button
@@ -256,6 +280,7 @@ const Login = () => {
           sx={{
             display: "block",
             margin: "1rem auto 0.5rem",
+            minWidth: "15rem",
           }}
           disabled={loginButtonDisabled}
           onClick={loginHandler}
@@ -274,40 +299,33 @@ const Login = () => {
         <FormGroup
           className={loginTab === 1 ? "maxHeightContainer" : ""}
           sx={{
-            display: "block",
+            flexDirection: "row",
+            alignItems: "center",
+
+            "@media(max-width: 576px)": {
+              flexDirection: "column-reverse !important",
+
+              "& img": { maxHeight: "15rem !important" },
+            },
           }}
         >
-          {Object.keys(signupInputs).map((key) =>
-            signupInputs?.[key].type !== "select" ? (
-              <TextField
-                variant="standard"
-                key={key}
-                label={signupInputs?.[key].id}
-                placeholder={signupInputs?.[key]?.placeholder}
-                type={signupInputs?.[key]?.type}
-                value={signupInfo?.[key]?.value}
-                inputProps={{
-                  maxLength: signupInputs?.[key]?.maxLength,
-                }}
-                onChange={(e) =>
-                  setSignupInfo({
-                    ...signupInfo,
-                    [key]: {
-                      ...signupInfo[key],
-                      value: e.target.value,
-                    },
-                  })
-                }
-                fullWidth
-              />
-            ) : (
-              <FormControl variant="standard" sx={{ display: "flex" }}>
-                <InputLabel sx={{ paddingLeft: "0.5rem" }}>
-                  {signupInputs?.[key]?.placeholder}
-                </InputLabel>
-                <Select
+          <Box
+            sx={{
+              flexGrow: "1",
+            }}
+          >
+            {Object.keys(signupInputs).map((key) =>
+              signupInputs?.[key].type !== "select" ? (
+                <TextField
+                  variant="standard"
+                  key={key}
                   label={signupInputs?.[key].id}
+                  placeholder={signupInputs?.[key]?.placeholder}
+                  type={signupInputs?.[key]?.type}
                   value={signupInfo?.[key]?.value}
+                  inputProps={{
+                    maxLength: signupInputs?.[key]?.maxLength,
+                  }}
                   onChange={(e) =>
                     setSignupInfo({
                       ...signupInfo,
@@ -317,14 +335,43 @@ const Login = () => {
                       },
                     })
                   }
-                >
-                  {signupInputs?.[key].options.map((option) => (
-                    <MenuItem value={option}>{option}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            )
-          )}
+                  fullWidth
+                />
+              ) : (
+                <FormControl variant="standard" sx={{ display: "flex" }}>
+                  <InputLabel sx={{ paddingLeft: "0.5rem" }}>
+                    {signupInputs?.[key]?.placeholder}
+                  </InputLabel>
+                  <Select
+                    label={signupInputs?.[key].id}
+                    value={signupInfo?.[key]?.value}
+                    onChange={(e) =>
+                      setSignupInfo({
+                        ...signupInfo,
+                        [key]: {
+                          ...signupInfo[key],
+                          value: e.target.value,
+                        },
+                      })
+                    }
+                  >
+                    {signupInputs?.[key].options.map((option) => (
+                      <MenuItem value={option}>{option}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )
+            )}
+          </Box>
+
+          <Image
+            style={{
+              maxWidth: "20rem",
+              width: "100%",
+            }}
+            src={signup}
+            alt="signup"
+          />
         </FormGroup>
 
         <Button
@@ -333,6 +380,7 @@ const Login = () => {
           sx={{
             display: "block",
             margin: "1rem auto 0.5rem",
+            minWidth: "15rem",
           }}
           disabled={signupButtonDisabled}
           onClick={signupHandler}
