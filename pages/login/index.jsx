@@ -72,7 +72,7 @@ const Login = () => {
           birth_year: signupInfo?.birth_year?.value?.toString(),
           password: signupInfo?.password?.value,
           study: signupInfo?.study?.value,
-          dailect: signupInfo?.dialect?.value,
+          dialect: signupInfo?.dialect?.value,
         })
       )
       .then((result) => {
@@ -87,7 +87,7 @@ const Login = () => {
             birth_year: signupInfo?.birth_year?.value?.toString(),
             password: signupInfo?.password?.value,
             study: signupInfo?.study?.value,
-            dailect: signupInfo?.dialect?.value,
+            dialect: signupInfo?.dialect?.value,
           })
         );
         router.replace("/");
@@ -114,7 +114,7 @@ const Login = () => {
       })
       .then((result) => {
         if (result?.data?.login === "True") {
-          localStorage.setItem("userId", loginInfo?.userId?.value);
+          localStorage.setItem("userId", result?.data?.phone_number);
           localStorage.setItem("userInfo", JSON.stringify(result?.data));
 
           router.replace("/");

@@ -8,7 +8,7 @@ const onRequest = (config) => {
   newConfig.baseURL = BASE_API_URL;
   newConfig.headers["Content-Type"] = "application/json";
   newConfig.headers["Access-Control-Allow-Origin"] = "*";
-  // newConfig.headers["Access-Control-Request-Method"] = "*";
+  newConfig.headers["Access-Control-Request-Method"] = "*";
   newConfig.headers["Access-Control-Allow-Methods"] = "*";
   newConfig.headers["Access-Control-Allow-Headers"] = "*";
 
@@ -20,7 +20,7 @@ const onRequestError = (error) => {
 };
 
 const onResponse = (response) => {
-  return response?.data;
+  return response?.data || response;
 };
 
 const onResponseError = async (error) => {
