@@ -219,6 +219,7 @@ const Login = () => {
         <FormGroup
           className={loginTab === 0 ? "maxHeightContainer" : ""}
           sx={{
+            flexDirection: "row",
             alignItems: "center",
 
             "@media(max-width: 576px)": {
