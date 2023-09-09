@@ -69,7 +69,7 @@ def startup() -> None:
                               `name` varchar(100) DEFAULT NULL,
                               `email` varchar(100) DEFAULT NULL,
                               `birth_year` varchar(100) DEFAULT NULL,
-                              `dailect` varchar(100) DEFAULT NULL,
+                              `dialect` varchar(100) DEFAULT NULL,
                               `study_level` varchar(100) DEFAULT NULL,
                               `gender` varchar(100) DEFAULT NULL
                             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

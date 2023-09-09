@@ -17,7 +17,7 @@ class signup(BaseModel):
     birth_year: str
     password: str
     study: Union[str, None] = None
-    dailect : Union[str, None] = None
+    dialect : Union[str, None] = None
 
 class user_info(BaseModel):
     phone_number: Union[str, None] = None
@@ -31,7 +31,7 @@ class userInfo_up(BaseModel):
     birth_year: Union[str, None] = None
     password: Union[str, None] = None
     study: Union[str, None] = None
-    dailect : Union[str, None] = None
+    dialect : Union[str, None] = None
 
 class upload(BaseModel):
     user_email: Union[str, None] = None
