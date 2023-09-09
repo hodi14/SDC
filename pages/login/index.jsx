@@ -65,7 +65,11 @@ const Login = () => {
       .post(
         "signup",
         JSON.stringify({
-          phone_number: signupInfo?.phone?.value?.toString(),
+          phone_number: signupInfo?.phone_number?.value
+            ?.toString()
+            .startsWith("0")
+            ? signupInfo?.phone_number?.value?.toString().substring(1)
+            : signupInfo?.phone_number?.value?.toString(),
           email: signupInfo?.email?.value,
           name: signupInfo?.name?.value,
           gender: signupInfo?.gender?.value,
@@ -76,11 +80,20 @@ const Login = () => {
         })
       )
       .then((result) => {
-        localStorage.setItem("userId", signupInfo?.phone?.value?.toString());
+        localStorage.setItem(
+          "userId",
+          signupInfo?.phone_number?.value?.toString().startsWith("0")
+            ? signupInfo?.phone_number?.value?.toString().substring(1)
+            : signupInfo?.phone_number?.value?.toString()
+        );
         localStorage.setItem(
           "userInfo",
           JSON.stringify({
-            phone_number: signupInfo?.phone?.value?.toString(),
+            phone_number: signupInfo?.phone_number?.value
+              ?.toString()
+              .startsWith("0")
+              ? signupInfo?.phone_number?.value?.toString().substring(1)
+              : signupInfo?.phone_number?.value?.toString(),
             email: signupInfo?.email?.value,
             name: signupInfo?.name?.value,
             gender: signupInfo?.gender?.value,
@@ -108,8 +121,12 @@ const Login = () => {
 
     axios
       .post("login", {
-        phone_number: loginInfo?.userId?.value,
-        email: loginInfo?.userId?.value,
+        phone_number: loginInfo?.userId?.value.toString().startsWith("0")
+          ? loginInfo?.userId?.value?.toString().substring(1)
+          : loginInfo?.userId?.value?.toString(),
+        email: loginInfo?.userId?.value.toString().startsWith("0")
+          ? loginInfo?.userId?.value?.toString().substring(1)
+          : loginInfo?.userId?.value?.toString(),
         password: loginInfo?.password?.value,
       })
       .then((result) => {
@@ -147,11 +164,11 @@ const Login = () => {
       setSignupButtonDisabled(true);
     if (signupInfo?.password?.value?.length < 8) setSignupButtonDisabled(true);
     if (
-      signupInfo?.phone?.length < 10 ||
-      (signupInfo?.phone?.length === 10 &&
-        !signupInfo?.phone?.value.startsWidth("9")) ||
-      (signupInfo?.phone?.length === 11 &&
-        !signupInfo?.phone?.value.startsWidth("09"))
+      signupInfo?.phone_number?.length < 10 ||
+      (signupInfo?.phone_number?.length === 10 &&
+        !signupInfo?.phone_number?.value.startsWith("9")) ||
+      (signupInfo?.phone_number?.length === 11 &&
+        !signupInfo?.phone_number?.value.startsWith("09"))
     )
       setSignupButtonDisabled(true);
     if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(signupInfo?.email?.value))

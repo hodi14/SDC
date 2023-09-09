@@ -13,7 +13,7 @@ export const signupInputs = {
     required: true,
     value: "",
   },
-  phone: {
+  phone_number: {
     id: "phone",
     placeholder: "phone number",
     type: "tel",
