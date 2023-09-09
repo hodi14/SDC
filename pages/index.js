@@ -16,6 +16,7 @@ import {
 import { loadingContext } from "../configs/context";
 import TaskCard from "../components/TaskCard";
 import UserInfo from "../components/UserInfo";
+import { checkLoggedIn } from "../utils/checkLoggedIn";
 
 export default function Home() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function Home() {
   const [userTasks, setUserTasks] = useState([]);
 
   useEffect(() => {
-    if (!localStorage.getItem("userId")) router.replace("/login");
+    if (!checkLoggedIn()) router.replace("/login");
     else {
       setIsLoggedIn(true);
       setApiLoading(true);
@@ -35,7 +36,7 @@ export default function Home() {
           setUserTasks(result?.data);
         })
         .catch(() => {
-          // toast.error('something went wrong');
+          toast.error("something went wrong");
         })
         .finally(() => {
           setApiLoading(false);
@@ -87,7 +88,7 @@ export default function Home() {
             flexDirection: "column",
           }}
         >
-          {userTasks?.length ? (
+          {!apiLoading && userTasks?.length ? (
             <Typography color="primary" variant="h6">
               Already Completed
             </Typography>
@@ -100,7 +101,7 @@ export default function Home() {
               padding: "0.5rem",
             }}
           >
-            {userTasks?.length ? (
+            {!apiLoading && userTasks?.length ? (
               userTasks?.map((item, index) => (
                 <Box
                   sx={{
@@ -127,7 +128,9 @@ export default function Home() {
 
           <CardActions sx={{ padding: "0" }}>
             <Button variant="contained" color="primary" fullWidth>
-              {userTasks?.length ? "Continue to next task" : "Go to first task"}
+              {!apiLoading && userTasks?.length
+                ? "Continue to next task"
+                : "Go to first task"}
             </Button>
           </CardActions>
         </Card>

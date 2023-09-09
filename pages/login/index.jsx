@@ -21,6 +21,7 @@ import {
 
 import { loginInputs, signupInputs } from "../../constants/login";
 import { loadingContext } from "../../configs/context";
+import { checkLoggedIn } from "../../utils/checkLoggedIn";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -48,7 +49,7 @@ const a11yProps = (index) => {
 const Login = () => {
   const theme = useTheme();
   const router = useRouter();
-  const { apiLoading, setApiLoading } = useContext(loadingContext);
+  const { setApiLoading } = useContext(loadingContext);
 
   const [loginTab, setLoginTab] = useState(0);
   const [loginInfo, setLoginInfo] = useState(loginInputs);
@@ -68,17 +69,30 @@ const Login = () => {
           email: signupInfo?.email?.value,
           name: signupInfo?.name?.value,
           gender: signupInfo?.gender?.value,
-          birth_year: signupInfo?.birthYear?.value?.toString(),
+          birth_year: signupInfo?.birth_year?.value?.toString(),
           password: signupInfo?.password?.value,
           study: signupInfo?.study?.value,
           dailect: signupInfo?.dialect?.value,
         })
       )
       .then((result) => {
-        localStorage.setItem("userId", result?.data?.id);
+        localStorage.setItem("userId", signupInfo?.phone?.value?.toString());
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({
+            phone_number: signupInfo?.phone?.value?.toString(),
+            email: signupInfo?.email?.value,
+            name: signupInfo?.name?.value,
+            gender: signupInfo?.gender?.value,
+            birth_year: signupInfo?.birth_year?.value?.toString(),
+            password: signupInfo?.password?.value,
+            study: signupInfo?.study?.value,
+            dailect: signupInfo?.dialect?.value,
+          })
+        );
         router.replace("/");
 
-        alert("succesfuly signed up :)");
+        toast.success("succesfuly signed up :)");
       })
       .catch(() => {
         setApiLoading(false);
@@ -97,13 +111,6 @@ const Login = () => {
         phone_number: loginInfo?.userId?.value,
         email: loginInfo?.userId?.value,
         password: loginInfo?.password?.value,
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          // "Access-Control-Request-Method": "*",
-          "Access-Control-Allow-Methods": "*",
-          "Access-Control-Allow-Headers": "*",
-        },
       })
       .then((result) => {
         if (result?.data?.login === "True") {
@@ -111,9 +118,9 @@ const Login = () => {
           localStorage.setItem("userInfo", JSON.stringify(result?.data));
 
           router.replace("/");
-          alert("welcome back :)");
+          toast.success("welcome back :)");
         } else {
-          alert("wrong info!");
+          toast.error("wrong info!");
         }
       })
       .catch(() => {
@@ -152,7 +159,7 @@ const Login = () => {
   }, [signupInfo]);
 
   useEffect(() => {
-    if (localStorage.getItem("userId")) router.replace("/");
+    if (checkLoggedIn()) router.replace("/");
   }, []);
 
   return (

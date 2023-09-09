@@ -43,7 +43,7 @@ export const signupInputs = {
     options: ["turkish", "kurd", "lor", "other"],
     value: "",
   },
-  study_level: {
+  study: {
     id: "study",
     placeholder: "education",
     type: "select",

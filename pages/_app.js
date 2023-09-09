@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
 import axios from "axios";
@@ -15,6 +15,7 @@ import useFullHeight from "../hooks/useFullHeight";
 
 import Panel from "../components/Panel";
 import Header from "../components/Header";
+import { checkLoggedIn } from "../utils/checkLoggedIn";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
@@ -36,25 +37,9 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     setTimeout(() => {
-      setLoggedIn(localStorage.getItem("userId"));
+      setLoggedIn(checkLoggedIn());
       setIsAdmin(localStorage.getItem("userId") == "o9732813xdh81d");
     }, 2000);
-
-    if (localStorage.getItem("userId")) {
-      setApiLoading(true);
-      axios
-        .get(`/tasks/${localStorage.getItem("userId")}`)
-        .then((result) => {
-          console.log("tasks: ", result);
-        })
-        .catch(() => {
-          setApiLoading(false);
-          toast.error("something went wrong");
-        })
-        .finally(() => {
-          setApiLoading(false);
-        });
-    }
   }, []);
 
   return (

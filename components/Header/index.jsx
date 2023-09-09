@@ -3,11 +3,13 @@ import Link from "next/link";
 
 import { Button, Card, Grid, Typography } from "@mui/material";
 
+import { checkLoggedIn } from "../../utils/checkLoggedIn";
+
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    if (localStorage?.getItem("userId")) setIsLoggedIn(true);
+    if (checkLoggedIn()) setIsLoggedIn(true);
   }, []);
 
   return (
@@ -25,8 +27,7 @@ const Header = () => {
           color="primary"
           variant="contained"
           onClick={() => {
-            localStorage?.getItem("userId") &&
-              localStorage?.removeItem("userId");
+            checkLoggedIn() && localStorage?.removeItem("userId");
             window.location.reload();
           }}
         >

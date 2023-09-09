@@ -5,6 +5,7 @@ import { Typography } from "@mui/material";
 
 import RecorderControls from "../../components/Recorder/Controls";
 import useRecorder from "../../hooks/useRecorder";
+import { checkLoggedIn } from "../../utils/checkLoggedIn";
 
 const Task = ({ item }) => {
   const router = useRouter();
@@ -13,7 +14,7 @@ const Task = ({ item }) => {
   const { audio } = recorderState;
 
   useEffect(() => {
-    if (!localStorage.getItem("userId")) router.replace("/login");
+    if (!checkLoggedIn()) router.replace("/login");
   }, []);
 
   return (

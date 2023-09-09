@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-const BASE_API_URL = "https://43.202.44.172:8810/";
+const BASE_API_URL = "https://speechdc.ir/";
 
 const onRequest = (config) => {
   const newConfig = { ...config };
@@ -20,7 +20,7 @@ const onRequestError = (error) => {
 };
 
 const onResponse = (response) => {
-  return response.data;
+  return response?.data;
 };
 
 const onResponseError = async (error) => {
