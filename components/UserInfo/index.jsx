@@ -65,7 +65,11 @@ const UserInfo = () => {
               fullWidth
             />
           ) : (
-            <FormControl variant="standard" fullWidth>
+            <FormControl
+              variant="standard"
+              fullWidth
+              sx={{ margin: "0.5rem 0" }}
+            >
               <InputLabel sx={{ paddingLeft: "0.5rem" }}>
                 {userInputs?.[key]?.value || userInputs?.[key]?.placeholder}
               </InputLabel>

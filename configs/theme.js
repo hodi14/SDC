@@ -43,6 +43,10 @@ export const getDesignTokens = ({ fullHeight }) => ({
             color: "#30566d",
           },
 
+          "& .MuiInputLabel-root": {
+            lineHeight: "2rem",
+          },
+
           "& .MuiButton-containedPrimary": {
             color: "#fff",
             "& *": {
@@ -61,6 +65,7 @@ export const getDesignTokens = ({ fullHeight }) => ({
 
           "& .MuiSelect-select": {
             height: "2rem !important",
+            lineHeight: "2rem",
             boxShadow: "inset 0 0 10px -5px #30566d",
             borderRadius: "1rem",
             padding: "0.25rem 0.5rem",
@@ -106,6 +111,7 @@ export const getDesignTokens = ({ fullHeight }) => ({
 
           "& .MuiInputLabel-root": {
             padding: "0 0.5rem",
+            lineHeight: "2rem",
           },
         },
       },

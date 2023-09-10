@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
 import axios from "axios";
 
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
@@ -92,6 +92,16 @@ function MyApp({ Component, pageProps }) {
                 }}
               >
                 <LinearProgress />
+
+                <Typography
+                  sx={{
+                    textAlign: "center",
+                    fontWeight: "bold",
+                    padding: "1rem 0",
+                  }}
+                >
+                  PLEASE WAIT...
+                </Typography>
               </Box>
             </Box>
           ) : (
