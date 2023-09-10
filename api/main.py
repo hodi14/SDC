@@ -114,7 +114,7 @@ def signup(data: signup) -> JSONResponse:
     # create user
     query = """
     INSERT INTO users
-    (name, gender,email,phone,birth_year,password, study_level, dialect)
+    (name, gender,email,phone,birth_year,password, study_level, dailect)
     VALUES (  """
     values = [data.name, data.gender, data.email, data.phone_number, data.birth_year, data.password, data.study,
               data.dialect]
