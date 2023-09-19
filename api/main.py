@@ -15,8 +15,8 @@ def tasks(id: str) -> JSONResponse:
     query = """SELECT *
         FROM tasks t  
         WHERE t.record_count  = ( SELECT MIN(record_count) FROM tasks )
-         AND (last_record is NULL  OR now() >= last_record + interval 5 minute)
-         LIMIT 1;"""
+         AND (last_record is NULL  OR now() >= last_record + interval 30 minute)
+         LIMIT 100;"""
     mycursor = app.mydb.cursor()
 
     mycursor.execute(query)
@@ -25,8 +25,10 @@ def tasks(id: str) -> JSONResponse:
 
     query = """UPDATE tasks
             SET last_record = '""" + time.strftime('%Y-%m-%d %H:%M:%S') + """'
-            WHERE id =""" + str(min([i[-1] for i in myresult]))# + """ AND id<= """ + str(
-    #    max([i[-1] for i in myresult]))
+            WHERE id IN ("""
+    for rec in myresult:
+        query+=str(rec[-1])+" ,"
+    query=query[:-1]+");"
     mycursor = app.mydb.cursor()
 
     mycursor.execute(query)
