@@ -42,11 +42,15 @@ def startup() -> None:
     except Exception as error:
         raise Exception(error)
     try:
+        app.host="localhost"
+        app.user="root"
+        app.password="root"
+        app.database="DB"
         app.mydb = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="password",
-        database="DB"
+        host=app.host,
+        user=app.user,
+        password=app.password,
+        database=app.database
         )
         if not checkTableExists( app.mydb,"tasks"):
             dbcur = app.mydb.cursor()
