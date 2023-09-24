@@ -24,6 +24,7 @@ function MyApp({ Component, pageProps }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [apiLoading, setApiLoading] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
 
   const fullHeight = useFullHeight();
   const theme = useMemo(
@@ -35,12 +36,24 @@ function MyApp({ Component, pageProps }) {
   );
   const value = useMemo(() => ({ apiLoading, setApiLoading }), [apiLoading]);
 
+  const loadingHandler = async () => {
+    if (!apiLoading) {
+      setTimeout(() => {
+        setShowLoading(false);
+      }, 1_000);
+    } else setShowLoading(true);
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setLoggedIn(checkLoggedIn());
       setIsAdmin(localStorage.getItem("userId") == "o9732813xdh81d");
     }, 2000);
   }, []);
+
+  useEffect(() => {
+    loadingHandler();
+  }, [apiLoading]);
 
   return (
     <loadingContext.Provider value={value}>
@@ -74,7 +87,7 @@ function MyApp({ Component, pageProps }) {
             overflow: "hidden",
           }}
         >
-          {apiLoading ? (
+          {showLoading ? (
             <Box className="apiLoading">
               <Box
                 sx={{

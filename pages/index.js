@@ -33,9 +33,10 @@ export default function Home() {
       setIsLoggedIn(true);
       setApiLoading(true);
       axios
-        .get(`/tasks_list/${localStorage.getItem("userId")}`)
+        .get(`/tasks/${localStorage.getItem("userId")}`)
         .then((result) => {
           setUserTasks(result?.data);
+          localStorage.setItem("tasks", JASON.stringify(result?.data));
         })
         .catch(() => {
           toast.error("something went wrong");

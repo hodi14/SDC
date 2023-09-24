@@ -1,4 +1,5 @@
 import { Card, Typography, Button } from "@mui/material";
+
 import Link from "next/link";
 
 const TaskCard = ({ item }) => {
@@ -9,7 +10,7 @@ const TaskCard = ({ item }) => {
       </Typography>
 
       <Button color="primary" variant="contained" fullWidth>
-        <Link href={`/task/${item.id}`}>view Item</Link>
+        <Link href={`/task/?id=${item.id}`}>View Task</Link>
       </Button>
     </Card>
   );
