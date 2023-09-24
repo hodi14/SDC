@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { htmlToText } from "html-to-text";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
@@ -29,7 +30,11 @@ const Task = () => {
 
   return task ? (
     <>
-      <Typography>{task?.text}</Typography>
+      {task.isHtml ? (
+        htmlToText(task.text)
+      ) : (
+        <Typography>{task?.text}</Typography>
+      )}
 
       <RecorderControls
         recorderState={recorderState}
