@@ -221,6 +221,7 @@ const Login = () => {
           sx={{
             flexDirection: "row",
             alignItems: "center",
+            flexWrap: "nowrap",
 
             "@media(max-width: 576px)": {
               flexDirection: "column-reverse !important",
@@ -302,6 +303,7 @@ const Login = () => {
           sx={{
             flexDirection: "row",
             alignItems: "center",
+            flexWrap: "nowrap",
 
             "@media(max-width: 576px)": {
               flexDirection: "column-reverse !important",
