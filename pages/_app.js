@@ -117,15 +117,18 @@ function MyApp({ Component, pageProps }) {
                 </Typography>
               </Box>
             </Box>
-          ) : (
-            <Box className="fullHeightContainer">
-              <Header />
+          ) : null}
 
-              <Box className="maxHeightContainer">
-                {isAdmin ? <Panel /> : <Component {...pageProps} />}
-              </Box>
+          <Box
+            className="fullHeightContainer"
+            sx={{ pointerEvents: apiLoading ? "none" : "auto" }}
+          >
+            <Header />
+
+            <Box className="maxHeightContainer">
+              {isAdmin ? <Panel /> : <Component {...pageProps} />}
             </Box>
-          )}
+          </Box>
         </Box>
       </ThemeProvider>
     </loadingContext.Provider>
