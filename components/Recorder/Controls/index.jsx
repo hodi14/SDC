@@ -8,6 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import RecordingsList from "../List";
 import { formatMinutes, formatSeconds } from "../../../utils/formatTime";
+import { signupInputs } from "../../../constants/login";
 
 const RecorderControls = ({ task, recorderState, handlers, audio }) => {
   const theme = useTheme();
