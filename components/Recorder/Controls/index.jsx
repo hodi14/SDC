@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { htmlToText } from "html-to-text";
 
 import { Box, Button, Card, Grid, Typography, useTheme } from "@mui/material";
@@ -12,6 +13,20 @@ const RecorderControls = ({ task, recorderState, handlers, audio }) => {
   const theme = useTheme();
   const { recordingMinutes, recordingSeconds, initRecording } = recorderState;
   const { startRecording, saveRecording, cancelRecording } = handlers;
+
+  const [userInputs, setUserInputs] = useState(signupInputs);
+
+  useEffect(() => {
+    Object.keys(JSON.parse(localStorage.getItem("userInfo"))).map((key) => {
+      setUserInputs((prevState) => ({
+        ...prevState,
+        [key]: {
+          ...userInputs[key],
+          value: JSON.parse(localStorage.getItem("userInfo"))[key],
+        },
+      }));
+    });
+  }, []);
 
   return (
     <Box
@@ -106,7 +121,7 @@ const RecorderControls = ({ task, recorderState, handlers, audio }) => {
               },
           }}
         >
-          <RecordingsList audio={audio} />
+          <RecordingsList audio={audio} task={task} userInputs={userInputs} />
         </Grid>
       </Grid>
     </Box>
