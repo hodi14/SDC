@@ -19,6 +19,7 @@ import TaskCard from "../components/TaskCard";
 import UserInfo from "../components/UserInfo";
 import { checkLoggedIn } from "../utils/checkLoggedIn";
 import empty from "../assets/images/empty.svg";
+import Link from "next/link";
 
 export default function Home() {
   const router = useRouter();
@@ -35,8 +36,8 @@ export default function Home() {
       axios
         .get(`/tasks/${localStorage.getItem("userId")}`)
         .then((result) => {
-          setUserTasks(result?.data);
-          localStorage.setItem("tasks", JASON.stringify(result?.data));
+          setUserTasks(result);
+          localStorage.setItem("tasks", JSON.stringify(result));
         })
         .catch(() => {
           toast.error("something went wrong");
@@ -142,9 +143,11 @@ export default function Home() {
 
           <CardActions sx={{ padding: "0" }}>
             <Button variant="contained" color="primary" fullWidth>
-              {!apiLoading && userTasks?.length
-                ? "Continue to next task"
-                : "Go to first task"}
+              <Link href="/task?id=0">
+                {!apiLoading && userTasks?.length
+                  ? "Continue to next task"
+                  : "Go to first task"}
+              </Link>
             </Button>
           </CardActions>
         </Card>

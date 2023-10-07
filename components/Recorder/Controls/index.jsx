@@ -1,3 +1,5 @@
+import { htmlToText } from "html-to-text";
+
 import { Box, Button, Card, Grid, Typography, useTheme } from "@mui/material";
 import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 import StopIcon from "@mui/icons-material/Stop";
@@ -6,7 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import RecordingsList from "../List";
 import { formatMinutes, formatSeconds } from "../../../utils/formatTime";
 
-const RecorderControls = ({ recorderState, handlers, audio }) => {
+const RecorderControls = ({ task, recorderState, handlers, audio }) => {
   const theme = useTheme();
   const { recordingMinutes, recordingSeconds, initRecording } = recorderState;
   const { startRecording, saveRecording, cancelRecording } = handlers;
@@ -17,26 +19,21 @@ const RecorderControls = ({ recorderState, handlers, audio }) => {
         display: "flex",
         flexDirection: "column",
         height: "calc(100vh - 8rem)",
+        fontFamily: "system-ui",
       }}
     >
       <Card
         sx={{
           flexGrow: "1",
           overflow: "auto",
+          direction: "rtl",
         }}
       >
-        <Typography>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Maecenas
-          accumsan lacus vel facilisis. Arcu odio ut sem nulla pharetra diam
-          sit. Molestie at elementum eu facilisis. Ullamcorper sit amet risus
-          nullam. Ipsum suspendisse ultrices gravida dictum fusce ut placerat
-          orci. Pretium quam vulputate dignissim suspendisse. Arcu risus quis
-          varius quam quisque id diam vel quam. Nulla malesuada pellentesque
-          elit eget gravida. Eget mauris pharetra et ultrices neque ornare
-          aenean euismod elementum. Et leo duis ut diam quam nulla porttitor.
-          Adipiscing at in tellus integer.
-        </Typography>
+        {task.isHtml ? (
+          htmlToText(task.text)
+        ) : (
+          <Typography>{task?.text}</Typography>
+        )}
       </Card>
 
       <Grid container alignItems="center" justifyContent="space-between">
