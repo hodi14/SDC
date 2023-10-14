@@ -278,7 +278,7 @@ def create_upload_file(detail: upload = Depends(), uploaded_file: UploadFile=Fil
         cursor.execute(query)
         app.mydb.commit()
         if not os.path.isdir('./files/'+user_dir):
-        os.system("mkdir ./files/"+user_dir)
+            os.system("mkdir ./files/"+user_dir)
 
     file_location = f"files/{record_id}.wav"
     with open(file_location, "wb+") as file_object:
