@@ -71,7 +71,7 @@ def userInfo_update(rec_id: str, data: userInfo_up) -> JSONResponse:
         SET """
     keys = ["name", "gender", "email", "phone", "birth_year", "password", "study_level", "dialect"]
     values = [data.name, data.gender, data.email, data.phone_number, data.birth_year, data.password, data.study,
-              data.]
+              data.dialect]
     s = ''
     for z, val in enumerate(values):
         if val is not None:
@@ -314,7 +314,7 @@ def edit(data: edit) -> JSONResponse:
               data.dialect]
     for key,val in zip(keys,values):
         if val is not None:
-            query+=key + " = "+str(val)+", "
+            query+=key + " = '"+str(val)+"', "
     query=query[:-2]+"\n WHERE "
 
     if data.phone_number is not None:
@@ -329,8 +329,9 @@ def edit(data: edit) -> JSONResponse:
         app.mydb.commit()
         return JSONResponse(
             content={"edit": "Successful",
-                     'phone': myresult[0], 'password': myresult[1],
-                     'name': myresult[2], 'email': myresult[3],
-                     'birth_year': myresult[4], 'dialect': myresult[5],
-                     'study_level': myresult[6], 'gender': myresult[7]}, status_code=200
+                   #  'phone': myresult[0], 'password': myresult[1],
+                   #  'name': myresult[2], 'email': myresult[3],
+                   #  'birth_year': myresult[4], 'dialect': myresult[5],
+                   #  'study_level': myresult[6], 'gender': myresult[7]
+                    }, status_code=200
         )
