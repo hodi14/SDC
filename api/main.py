@@ -69,9 +69,9 @@ def userInfo_update(rec_id: str, data: userInfo_up) -> JSONResponse:
     # updating
     query = """UPDATE users
         SET """
-    keys = ["name", "gender", "email", "phone", "birth_year", "password", "study_level", "dailect"]
+    keys = ["name", "gender", "email", "phone", "birth_year", "password", "study_level", "dialect"]
     values = [data.name, data.gender, data.email, data.phone_number, data.birth_year, data.password, data.study,
-              data.dailect]
+              data.]
     s = ''
     for z, val in enumerate(values):
         if val is not None:
@@ -103,7 +103,7 @@ def userInfo(id: str) -> JSONResponse:
             content={"user_info": []}, status_code=200
         )
 
-    keys = ["phone_number", "name", "email", "birth_year", "dailect", "study_level", "gender"]
+    keys = ["phone_number", "name", "email", "birth_year", "dialect", "study_level", "gender"]
     myresult = myresult[0]
     return dict(zip(keys, myresult[:1] + myresult[2:]))
     # return myresult
@@ -131,10 +131,10 @@ def signup(data: signup) -> JSONResponse:
     # create user
     query = """
     INSERT INTO users
-    (name, gender,email,phone,birth_year,password, study_level, dailect)
+    (name, gender,email,phone,birth_year,password, study_level, dialect)
     VALUES (  """
     values = [data.name, data.gender, data.email, data.phone_number, data.birth_year, data.password, data.study,
-              data.dailect]
+              data.dialect]
     for z, val in enumerate(values):
         if val == None:
             values[z] = "NULL"
@@ -147,7 +147,7 @@ def signup(data: signup) -> JSONResponse:
             content={"signup": "Successful",
                 #     'phone': data.phone_number, 'password': data.password,
                  #    'name': data.name, 'email': data.email,
-                  #   'birth_year': data.birth_year, 'dailect': data.dailect,
+                  #   'birth_year': data.birth_year, 'dialect': data.dialect,
                    #  'study_level': data.study, 'gender': data.gender,
                      }, status_code=200
         )
@@ -159,7 +159,7 @@ def login(data: Auth) -> JSONResponse:
     if data.phone_number is not None:
         query += " phone=" + "'" + str(data.phone_number) + "'"
     elif data.email is not None:
-        query += " mail='" + str(data.mail) + "'"
+        query += " mail='" + str(data.email) + "'"
     else:
         raise Exception("not valid data")
     query += " LIMIT 1"
@@ -179,7 +179,7 @@ def login(data: Auth) -> JSONResponse:
             content={"login": "True",
                      'phone':myresult[0], 'password':myresult[1],
                      'name':myresult[2], 'email':myresult[3],
-                     'birth_year':myresult[4], 'dailect':myresult[5],
+                     'birth_year':myresult[4], 'dialect':myresult[5],
                      'study_level':myresult[6], 'gender':myresult[7] }, status_code=200
         )
     else:
@@ -194,7 +194,7 @@ def user_list() -> JSONResponse:
     mycursor = cursor_instance()
     mycursor.execute(query)
     myresult = mycursor.fetchall()
-    keys = ["phone_number", "name", "email", "birth_year", "dailect", "study_level", "gender"]
+    keys = ["phone_number", "name", "email", "birth_year", "dialect", "study_level", "gender"]
     return [dict(zip(keys, rec[:1] + rec[2:])) for rec in myresult]
 
 
@@ -285,7 +285,6 @@ def create_upload_file(detail: upload = Depends(), uploaded_file: UploadFile=Fil
         shutil.copyfileobj(uploaded_file.file, file_object)
     return {"info": f"file '{uploaded_file.filename}' saved at '{file_location}'"}
 
-
 @model_api.post("/edit")
 def edit(data: edit) -> JSONResponse:
     # verification if user exusts
@@ -312,7 +311,7 @@ def edit(data: edit) -> JSONResponse:
     keys = ["name", "gender", "email", "phone", "birth_year", "password", "study_level",
               "dialect"]
     values = [data.name, data.gender, data.email, data.phone_number, data.birth_year, data.password, data.study,
-              data.dailect]
+              data.dialect]
     for key,val in zip(keys,values):
         if val is not None:
             query+=key + " = "+str(val)+", "
@@ -332,6 +331,6 @@ def edit(data: edit) -> JSONResponse:
             content={"edit": "Successful",
                      'phone': myresult[0], 'password': myresult[1],
                      'name': myresult[2], 'email': myresult[3],
-                     'birth_year': myresult[4], 'dailect': myresult[5],
+                     'birth_year': myresult[4], 'dialect': myresult[5],
                      'study_level': myresult[6], 'gender': myresult[7]}, status_code=200
         )
