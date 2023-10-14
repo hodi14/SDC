@@ -39,13 +39,6 @@ class upload(BaseModel):
     task_id: Union[int, None] = None
     task_text: Union[str, None] = None
 
-
-class upload(BaseModel):
-    user_email: Union[str, None] = None
-    user_phone:  Union[str, None] = None
-    task_id: Union[int, None] = None
-    task_text: Union[str, None] = None
-
 class edit(BaseModel):
     phone_number: Union[str, None] = None
     email: Union[str, None] = None
@@ -54,4 +47,4 @@ class edit(BaseModel):
     birth_year: str
     password: str
     study: Union[str, None] = None
-    dailect : Union[str, None] = None
+    dialect : Union[str, None] = None
