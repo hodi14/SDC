@@ -73,7 +73,7 @@ def startup() -> None:
                               `name` varchar(100) DEFAULT NULL,
                               `email` varchar(100) DEFAULT NULL,
                               `birth_year` varchar(100) DEFAULT NULL,
-                              `dailect` varchar(100) DEFAULT NULL,
+                              `dialect` varchar(100) DEFAULT NULL,
                               `study_level` varchar(100) DEFAULT NULL,
                               `gender` varchar(100) DEFAULT NULL
                             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -87,6 +87,7 @@ def startup() -> None:
                           `task_id` int NOT NULL,
                           `created_at` timestamp NULL DEFAULT NULL,
                           `id` int NOT NULL AUTO_INCREMENT,
+                          `noise` varchar(100) DEFAULT NULL,
                           PRIMARY KEY (`id`)
                         ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
                     """)
