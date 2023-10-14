@@ -37,6 +37,7 @@ class upload(BaseModel):
     user_email: Union[str, None] = None
     user_phone:  Union[str, None] = None
     task_id: Union[int, None] = None
+    noise : Union[str, None] = None
     task_text: Union[str, None] = None
 
 class edit(BaseModel):
