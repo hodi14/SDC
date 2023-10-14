@@ -266,10 +266,10 @@ def create_upload_file(detail: upload = Depends(), uploaded_file: UploadFile=Fil
 
     query = """
     INSERT INTO recorded
-    (user_email, user_phone,task_id,created_at,id)
+    (user_email, user_phone,task_id,created_at,noise,id)
     VALUES ( "%s", "%s" , "%s", "%s",%s)
     """
-    values = [detail.user_email, detail.user_phone, detail.task_id, time.strftime('%Y-%m-%d %H:%M:%S') ,record_id]
+    values = [detail.user_email, detail.user_phone, detail.task_id, time.strftime('%Y-%m-%d %H:%M:%S') ,detail.noise,record_id]
     for z, val in enumerate(values):
         if val == None:
             values[z] = "NULL"
@@ -277,7 +277,7 @@ def create_upload_file(detail: upload = Depends(), uploaded_file: UploadFile=Fil
     with cursor_instance() as cursor:
         cursor.execute(query)
         app.mydb.commit()
-    if not os.path.isdir('./files/'+user_dir):
+        if not os.path.isdir('./files/'+user_dir):
         os.system("mkdir ./files/"+user_dir)
 
     file_location = f"files/{record_id}.wav"
