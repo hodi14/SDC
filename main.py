@@ -91,6 +91,16 @@ def startup() -> None:
                           PRIMARY KEY (`id`)
                         ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
                     """)
+        if not checkTableExists( app.mydb,"admin"):
+            dbcur = app.mydb.cursor()
+            dbcur.execute("""
+                        CREATE TABLE `admin` (
+                          `user_name` varchar(100) DEFAULT NULL,
+                          `password` varchar(100) NOT NULL,
+                          `id` int NOT NULL AUTO_INCREMENT,
+                          PRIMARY KEY (`id`)
+                        ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                    """)    
 
 
     except Exception as error:
