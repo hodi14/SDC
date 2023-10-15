@@ -335,3 +335,26 @@ def edit(data: edit) -> JSONResponse:
                    #  'study_level': myresult[6], 'gender': myresult[7]
                     }, status_code=200
         )
+
+@model_api.post("/admin_login")
+def admin_login(data: admin_Auth) -> JSONResponse:
+    query = "SELECT * FROM admin Where user_name = "+data.user_name + " LIMIT 1"
+    mycursor = cursor_instance()
+
+    mycursor.execute(query)
+
+    myresult = mycursor.fetchall()
+    if len(myresult) == 0:
+        return JSONResponse(
+            content={"login": "False"}, status_code=200
+        )
+    myresult = myresult[0]
+
+    if myresult[1] == data.password:
+        return JSONResponse(
+            content={"login": "True",}, status_code=200
+        )
+    else:
+        return JSONResponse(
+            content={"login": "False"}, status_code=200
+        )
