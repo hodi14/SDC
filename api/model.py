@@ -49,3 +49,7 @@ class edit(BaseModel):
     password: str
     study: Union[str, None] = None
     dialect : Union[str, None] = None
+
+class admin_Auth(BaseModel):
+    user_name: Union[str, None] = None
+    password: str
