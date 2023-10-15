@@ -338,7 +338,7 @@ def edit(data: edit) -> JSONResponse:
 
 @model_api.post("/admin_login")
 def admin_login(data: admin_Auth) -> JSONResponse:
-    query = "SELECT * FROM admin Where user_name = "+data.user_name + " LIMIT 1"
+    query = "SELECT * FROM admin Where user_name = '"+data.user_name + "' LIMIT 1"
     mycursor = cursor_instance()
 
     mycursor.execute(query)
