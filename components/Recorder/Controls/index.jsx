@@ -10,24 +10,16 @@ import RecordingsList from "../List";
 import { formatMinutes, formatSeconds } from "../../../utils/formatTime";
 import { signupInputs } from "../../../constants/login";
 
-const RecorderControls = ({ task, recorderState, handlers, audio }) => {
+const RecorderControls = ({
+  task,
+  recorderState,
+  handlers,
+  audio,
+  userInfo,
+}) => {
   const theme = useTheme();
   const { recordingMinutes, recordingSeconds, initRecording } = recorderState;
   const { startRecording, saveRecording, cancelRecording } = handlers;
-
-  const [userInputs, setUserInputs] = useState(signupInputs);
-
-  useEffect(() => {
-    Object.keys(JSON.parse(localStorage.getItem("userInfo"))).map((key) => {
-      setUserInputs((prevState) => ({
-        ...prevState,
-        [key]: {
-          ...userInputs[key],
-          value: JSON.parse(localStorage.getItem("userInfo"))[key],
-        },
-      }));
-    });
-  }, []);
 
   return (
     <Box
@@ -122,7 +114,7 @@ const RecorderControls = ({ task, recorderState, handlers, audio }) => {
               },
           }}
         >
-          <RecordingsList audio={audio} task={task} userInputs={userInputs} />
+          <RecordingsList audio={audio} task={task} userInfo={userInfo} />
         </Grid>
       </Grid>
     </Box>

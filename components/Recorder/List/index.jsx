@@ -12,7 +12,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import useRecordingsList from "../../../hooks/useRecordingsList";
 import axios from "axios";
 
-const RecordingsList = ({ audio, task }) => {
+const RecordingsList = ({ audio, task, userInfo }) => {
   const theme = useTheme();
   const { recordings, deleteAudio } = useRecordingsList(audio);
 
@@ -77,8 +77,8 @@ const RecordingsList = ({ audio, task }) => {
             sx={{ width: "6.5rem" }}
             onClick={() => {
               axios.post("upload-file", {
-                user_email: userInputs?.email?.value,
-                user_phone: userInputs?.phone_number?.value,
+                user_email: userInfo?.email?.value,
+                user_phone: userInfo?.phone_number?.value,
                 task_text: task?.text,
                 task_id: task?.id,
                 uploaded_file: audio,
