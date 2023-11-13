@@ -1,3 +1,8 @@
+import { useContext } from "react";
+import axios from "axios";
+import FormData from "form-data";
+import { toast } from "react-toastify";
+
 import {
   Button,
   Grid,
@@ -10,11 +15,14 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import useRecordingsList from "../../../hooks/useRecordingsList";
-import axios from "axios";
+import { loadingContext } from "../../../configs/context";
 
 const RecordingsList = ({ audio, task, userInfo }) => {
   const theme = useTheme();
   const { recordings, deleteAudio } = useRecordingsList(audio);
+  const formData = new FormData();
+
+  const { setApiLoading } = useContext(loadingContext);
 
   return (
     recordings.length > 0 && (
@@ -76,13 +84,29 @@ const RecordingsList = ({ audio, task, userInfo }) => {
             color="primary"
             sx={{ width: "6.5rem" }}
             onClick={() => {
-              axios.post("upload-file", {
-                user_email: userInfo?.email?.value,
-                user_phone: userInfo?.phone_number?.value,
-                task_text: task?.text,
-                task_id: task?.id,
-                uploaded_file: audio,
-              });
+              setApiLoading(true);
+
+              formData.append("user_email", userInfo?.email?.value);
+              formData.append("user_phone", userInfo?.phone_number?.value);
+              formData.append("task_text", task?.text);
+              formData.append("task_id", task?.id);
+              formData.append("uploaded_file", audio);
+
+              axios
+                .post("upload-file", formData, {
+                  headers: {
+                    "Content-Type": "multipart/form-data",
+                  },
+                })
+                .then(() => {
+                  toast.error("file successfully uploaded");
+                })
+                .catch(() => {
+                  toast.error("something went wrong");
+                })
+                .finally(() => {
+                  setApiLoading(false);
+                });
             }}
           >
             Submit
